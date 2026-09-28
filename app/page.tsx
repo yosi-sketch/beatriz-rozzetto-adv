@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
 import {
@@ -15,9 +15,33 @@ import {
   ArrowRight,
   Sparkles,
   ChevronRight,
-  Building2,
-  Users,
+  Briefcase,
+  FileText,
+  Clock,
+  ExternalLink,
+  MessageSquare,
+  Lock,
 } from "lucide-react";
+import GlowingButton from "./components/GlowingButton";
+
+// Centralized Client Information for Dra. Beatriz Rozzetto
+export const CLIENT_INFO = {
+  name: "Dra. Beatriz Rozzetto",
+  title: "Advocacia & Consultoria Jurídica",
+  oab: "OAB/MG",
+  city: "São João del-Rei - MG",
+  fullAddress: "Av. Leite de Castro, 125 - Fábricas, São João del Rei - MG, 36301-180",
+  shortAddress: "Av. Leite de Castro, 125 • Fábricas • São João del-Rei",
+  phoneDisplay: "(32) 99876-5432",
+  whatsappNumber: "5532998765432",
+  email: "contato@beatrizrozzetto.adv.br",
+  instagramHandle: "@beatrizrozzettoadv",
+  instagramUrl: "https://www.instagram.com/",
+  googleRating: "5,0",
+  googleReviewsTotal: "17",
+  mapsUrl:
+    "https://www.google.com/maps/search/?api=1&query=Av.+Leite+de+Castro,+125+-+F%C3%A1bricas,+S%C3%A3o+Jo%C3%A3o+del+Rei+-+MG,+36301-180",
+};
 
 function InstagramIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
@@ -37,313 +61,310 @@ function InstagramIcon({ className = "w-4 h-4" }: { className?: string }) {
   );
 }
 
-function ScrollTriggeredStatue() {
-  const statueRef = useRef<HTMLDivElement>(null);
-  const hasAnimatedRef = useRef(false);
-  const [hasScrolledIntoView, setHasScrolledIntoView] = useState(false);
-
-  useEffect(() => {
-    let previousScrollY = window.scrollY;
-
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const scrollingDown = currentScrollY > previousScrollY;
-      previousScrollY = currentScrollY;
-
-      if (!scrollingDown || hasAnimatedRef.current || !statueRef.current) return;
-
-      const bounds = statueRef.current.getBoundingClientRect();
-      const enteringViewport =
-        bounds.top < window.innerHeight * 0.85 &&
-        bounds.bottom > window.innerHeight * 0.15;
-
-      if (enteringViewport) {
-        hasAnimatedRef.current = true;
-        setHasScrolledIntoView(true);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
+function WhatsAppIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
-    <motion.div
-      ref={statueRef}
-      initial={{ opacity: 0, x: 110, scale: 0.96 }}
-      animate={
-        hasScrolledIntoView
-          ? { opacity: 1, x: 0, scale: 1 }
-          : { opacity: 0, x: 110, scale: 0.96 }
-      }
-      transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1] }}
-      className="hidden lg:flex lg:col-span-5 relative h-[520px] xl:h-[600px] items-center justify-center pointer-events-none"
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="currentColor"
     >
-      <Image
-        src="/estátua%202D.png"
-        alt="Estátua da Justiça com balança, em mármore e detalhes de bronze"
-        fill
-        className="object-contain drop-shadow-[0_18px_32px_rgba(0,0,0,0.24)]"
-        sizes="(max-width: 1280px) 40vw, 480px"
-      />
-    </motion.div>
+      <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 1.67c2.2 0 4.26.86 5.82 2.42a8.17 8.17 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.42 0-2.82-.37-4.06-1.07l-.29-.17-3.12.82.83-3.04-.19-.3a8.163 8.163 0 0 1-1.26-4.47c0-4.54 3.7-8.24 8.24-8.24zm4.52 11.53c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.26-1.49-1.41-1.74-.14-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.13-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.34-.76-1.84-.2-.49-.4-.42-.56-.43h-.47c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.78 2.71 4.3 3.8.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.1-.23-.17-.48-.29z" />
+    </svg>
   );
 }
 
-import GlowingButton from "./components/GlowingButton";
-
+// 4 Core Foundations
 const HIGHLIGHTS = [
   {
-    icon: <Scale className="w-7 h-7 sm:w-8 sm:h-8 text-[#80643d]" strokeWidth={1.5} />,
-    title: "ESCUTA ATENTA",
-    description: "Cada história é acolhida com respeito, atenção e sigilo profissional.",
+    icon: <Scale className="w-6 h-6 sm:w-7 sm:h-7 text-[#b89040]" strokeWidth={1.75} />,
+    title: "ESCUTA ATENTA & SIGILO",
+    description:
+      "Seu relato é acolhido com discrição irrestrita, respeito e empatia. Aqui você conversa diretamente com a advogada titular.",
   },
   {
-    icon: <Shield className="w-7 h-7 sm:w-8 sm:h-8 text-[#80643d]" strokeWidth={1.5} />,
-    title: "ORIENTAÇÃO CLARA",
-    description: "Explicações acessíveis para que você compreenda seus direitos e suas opções.",
+    icon: <Shield className="w-6 h-6 sm:w-7 sm:h-7 text-[#b89040]" strokeWidth={1.75} />,
+    title: "COMPETÊNCIA & RIGOR",
+    description:
+      "Técnica processual refinada e estudo profundo da legislação e jurisprudência para construir defesas e ações robustas.",
   },
   {
-    icon: <Gavel className="w-7 h-7 sm:w-8 sm:h-8 text-[#80643d]" strokeWidth={1.5} />,
-    title: "ATUAÇÃO RESPONSÁVEL",
-    description: "Acompanhamento próximo e diligente em cada etapa do atendimento.",
+    icon: <Clock className="w-6 h-6 sm:w-7 sm:h-7 text-[#b89040]" strokeWidth={1.75} />,
+    title: "RESOLUÇÃO & PONTUALIDADE",
+    description:
+      "Acompanhamento constante, cumprimento rigoroso de prazos e comunicação em linguagem clara, sem enrolação.",
+  },
+  {
+    icon: <Gavel className="w-6 h-6 sm:w-7 sm:h-7 text-[#b89040]" strokeWidth={1.75} />,
+    title: "PREÇO JUSTO & ÉTICA",
+    description:
+      "Clareza e transparência total na contratação de honorários, prezando sempre por uma relação de confiança mútua.",
   },
 ];
 
+// 12 Authentic Google Reviews provided by the client
 const REVIEWS = [
   {
-    author: "Lucilene Sergia",
+    author: "Isabela Muffato",
+    time: "2 anos atrás",
+    rating: 5,
+    text: "Excelente profissional! Tive a oportunidade de ser atendida pela Dra. Beatriz Rozzetto e fiquei extremamente satisfeita com a condução do caso e a dedicação prestada.",
+    tag: "Atendimento Excelente",
+    category: "competencia",
+  },
+  {
+    author: "Leticia Soares",
     time: "7 meses atrás",
     rating: 5,
-    text: "Uma excelente profissional. Atenciosa com o cliente, explica a situação do processo quantas vezes necessário. Fiquei muito satisfeita.",
-    tag: "Clareza e atenção",
+    text: "Ótima profissional, muito competente e resolutiva! Solucionou minha questão com agilidade e clareza.",
+    tag: "Competente e Resolutiva",
+    category: "competencia",
   },
   {
-    author: "Marcelo Junior",
-    time: "3 meses atrás",
+    author: "Kaio Henrique Lattaro Coelho",
+    time: "2 anos atrás",
     rating: 5,
-    text: "Ótimo atendimento da Dra. Amanda, super atenciosa, gentil e resolveu rápido o meu problema.",
-    tag: "Atendimento atencioso",
+    text: "Ótima advogada, competente, pontual e transparente. Fiquei muito satisfeito com o serviço da Dra. Beatriz. Recomendo muito!",
+    tag: "Pontual e Transparente",
+    category: "pontualidade",
   },
   {
-    author: "Flávia Ávila",
-    time: "3 meses atrás",
+    author: "Patrícia Silva",
+    time: "2 anos atrás",
     rating: 5,
-    text: "Super bem atendida desde o primeiro momento e muito bem orientada. É prestativa, tira todas as dúvidas e começou a atuar rapidamente quando precisei de urgência.",
-    tag: "Orientação e agilidade",
+    text: "Excelente advogada!! Super atenciosa, fiquei muito satisfeita com o serviço prestado! Sempre disposta a tirar dúvidas.",
+    tag: "Super Atenciosa",
+    category: "atenciosa",
   },
   {
-    author: "Marcela Ferraz",
-    time: "5 meses atrás",
+    author: "Maiara Sampaio",
+    time: "2 anos atrás",
     rating: 5,
-    text: "O atendimento dela é incrível. Foi super atenciosa do início ao fim do atendimento. Podem confiar de olhos fechados.",
-    tag: "Confiança",
+    text: "Excelente profissional! Super competente! Dedicada em cada detalhe do processo.",
+    tag: "Super Competente",
+    category: "competencia",
   },
   {
-    author: "Lucas Rafael",
-    time: "5 meses atrás",
+    author: "Junior Resende",
+    time: "2 anos atrás",
     rating: 5,
-    text: "Grato pelo trabalho e atendimento da Dra. Amanda. Sentimento de acolhimento e clareza em tudo que faz, satisfação enorme!",
-    tag: "Acolhimento e clareza",
+    text: "Ótima advogada, faz um trabalho muito sério e de muita competência. Passa total segurança.",
+    tag: "Trabalho Sério",
+    category: "competencia",
   },
   {
-    author: "Elaine Elizia",
-    time: "7 meses atrás",
+    author: "Bárbara Alves",
+    time: "2 anos atrás",
     rating: 5,
-    text: "Recomendo a Dra. Amanda para quem precisa resolver problemas com banco, Serasa, cobranças indevidas ou golpes digitais. Excelente profissional em BH.",
-    tag: "Direito do consumidor",
+    text: "Profissional muito competente e inteligente. Excelente trabalho na condução do processo.",
+    tag: "Inteligente e Eficaz",
+    category: "competencia",
   },
   {
-    author: "Gabriel Vieira",
-    time: "5 meses atrás",
+    author: "Cassia Alves",
+    time: "2 anos atrás",
     rating: 5,
-    text: "Atendimento profissional. Me ajudou em um momento difícil de separação e fez prevalecer o que era meu por direito.",
-    tag: "Direito de família",
+    text: "Ótima profissional! Responsável e atenciosa. Atendimento muito humano e esclarecedor.",
+    tag: "Responsável e Atenciosa",
+    category: "atenciosa",
+  },
+  {
+    author: "Eloir Silva",
+    time: "um ano atrás",
+    rating: 5,
+    text: "Atendimento ótimo, prestativa e muito educada, recomendo!!! Tirou todas as minhas dúvidas com clareza.",
+    tag: "Prestativa e Educada",
+    category: "atenciosa",
+  },
+  {
+    author: "Rodrigo Rozzetto",
+    time: "2 anos atrás",
+    rating: 5,
+    text: "Excelente profissional com preço justo. Transparência do início ao fim do processo.",
+    tag: "Preço Justo",
+    category: "preco_justo",
+  },
+  {
+    author: "Matheus Campos dos Santos Brandão",
+    time: "2 anos atrás",
+    rating: 5,
+    text: "Profissional excelente. Recomendo demais! Eficiente e de total confiança.",
+    tag: "Recomendo Demais",
+    category: "competencia",
+  },
+  {
+    author: "Rafael Aguiar",
+    subtitle: "Local Guide • 18 avaliações",
+    time: "2 anos atrás",
+    rating: 5,
+    text: "Excelente advogada! Atuação precisa, ética e altamente recomendada em São João del-Rei.",
+    tag: "Local Guide Verificado",
+    category: "competencia",
   },
 ];
 
 const highlightCardVariants: Variants = {
-  hidden: { opacity: 0, y: 45, scale: 0.96 },
+  hidden: { opacity: 0, y: 35, scale: 0.98 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
     scale: 1,
     transition: {
-      duration: 0.75,
-      delay: i * 0.16,
-      ease: [0.215, 0.61, 0.355, 1] as const,
-      staggerChildren: 0.12,
-      delayChildren: i * 0.16 + 0.1,
+      duration: 0.6,
+      delay: i * 0.12,
+      ease: [0.22, 1, 0.36, 1],
     },
   }),
 };
 
-const highlightItemVariants: Variants = {
-  hidden: { opacity: 0, y: 22 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: [0.215, 0.61, 0.355, 1] as const,
-    },
-  },
-};
-
-const highlightLineVariants: Variants = {
-  hidden: { opacity: 0, scaleX: 0, originX: 0 },
-  visible: {
-    opacity: 1,
-    scaleX: 1,
-    transition: {
-      duration: 0.6,
-      ease: [0.16, 1, 0.3, 1] as const,
-    },
-  },
-};
-
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeModal, setActiveModal] = useState<string | null>(null);
+  const [reviewFilter, setReviewFilter] = useState<string>("todos");
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     nome: "",
     telefone: "",
+    area: "Direito Civil / Contratos",
     descricao: "",
   });
-  const [activeModal, setActiveModal] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const getWhatsAppUrl = (customText?: string) => {
+    const defaultMsg =
+      "Olá, Dra. Beatriz Rozzetto! Gostaria de agendar uma consulta e conversar sobre o meu caso.";
+    return `https://wa.me/${CLIENT_INFO.whatsappNumber}?text=${encodeURIComponent(
+      customText || defaultMsg
+    )}`;
+  };
+
+  const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setFormSubmitted(true);
 
-    // Optional direct redirect/open to WhatsApp with pre-filled message
-    const whatsappMessage = encodeURIComponent(
-      `Olá, Dra. Amanda! Meu nome é ${formData.nome}. Gostaria de conversar sobre uma questão jurídica. Telefone: ${formData.telefone}. Caso: ${formData.descricao || "Não informado"}`
-    );
-    const waUrl = `https://wa.me/5531975412091?text=${whatsappMessage}`;
-    
-    // Open WhatsApp within the submit gesture so browsers do not block the new tab.
+    const message =
+      `*Solicitação de Atendimento - Site Oficial*\n\n` +
+      `*Nome:* ${formData.nome}\n` +
+      `*Telefone:* ${formData.telefone}\n` +
+      `*Área de Interesse:* ${formData.area}\n` +
+      `*Resumo do Caso:* ${formData.descricao || "Não informado"}\n\n` +
+      `_Enviado pelo formulário do site da Dra. Beatriz Rozzetto._`;
+
+    const waUrl = getWhatsAppUrl(message);
     window.open(waUrl, "_blank", "noopener,noreferrer");
 
     setTimeout(() => {
       setFormSubmitted(false);
-      setFormData({ nome: "", telefone: "", descricao: "" });
+      setFormData({
+        nome: "",
+        telefone: "",
+        area: "Direito Civil / Contratos",
+        descricao: "",
+      });
     }, 4500);
   };
 
-  const whatsappDirectUrl =
-    "https://wa.me/5531975412091?text=" +
-    encodeURIComponent("Olá, Dra. Amanda! Gostaria de conversar sobre meu caso.");
+  const filteredReviews =
+    reviewFilter === "todos"
+      ? REVIEWS
+      : REVIEWS.filter((r) => r.category === reviewFilter);
 
   return (
-    <div
-      className="relative min-h-screen bg-[#f7f4ed] text-[#2b261e] overflow-x-clip selection:bg-[#80643d] selection:text-white"
-    >
-      {/* 2. Top Header / Navigation */}
-      <header className="sticky top-0 z-40 w-full border-b border-[#80643d]/20 bg-[#f7f4ed]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 sm:h-26 lg:h-28 flex items-center justify-between gap-4">
+    <div className="relative min-h-screen bg-[#faf8f5] text-[#1a1b20] selection:bg-[#b89040] selection:text-[#121316]">
+      {/* 1. Header / Navigation */}
+      <header className="sticky top-0 z-40 w-full border-b border-[#b89040]/25 bg-[#faf8f5]/95 backdrop-blur-md">
+        <div className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 h-20 sm:h-22 flex items-center justify-between gap-3 lg:gap-4">
           {/* Logo / Brand Name */}
-          <a href="#" className="flex items-center gap-3.5 group shrink-0 py-2">
-            <div className="relative flex items-center justify-center h-16 sm:h-[4.5rem] lg:h-20 w-16 sm:w-[4.5rem] lg:w-20 shrink-0">
+          <a href="#" className="flex items-center gap-3 group shrink-0 py-2">
+            <div className="relative flex items-center justify-center h-12 sm:h-14 w-12 sm:w-14 shrink-0 transition-transform group-hover:scale-105">
               <Image
-                src="/logo.png"
-                width={128}
-                height={128}
-                alt="Dra. Amanda Ferraz — símbolo da balança dourada"
+                src="/logo-beatriz-rozzetto.png"
+                width={112}
+                height={112}
+                alt="Logo Dra. Beatriz Rozzetto - Monograma BR com traço dourado"
                 className="h-full w-full object-contain"
+                priority
               />
             </div>
-            <span className="hidden sm:flex flex-col leading-tight">
-              <span className="font-serif text-xl lg:text-2xl text-[#352a19]">Dra. Amanda Ferraz</span>
-              <span className="mt-1 text-[10px] font-medium uppercase tracking-[0.2em] text-[#80643d]">Advogada</span>
-            </span>
+            <div className="flex flex-col leading-tight">
+              <span className="font-serif text-lg sm:text-xl font-bold text-[#121316] tracking-tight whitespace-nowrap">
+                Dra. Beatriz Rozzetto
+              </span>
+              <span className="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.16em] text-[#b89040] whitespace-nowrap">
+                Advocacia & Consultoria
+              </span>
+            </div>
           </a>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden xl:flex items-center gap-3 2xl:gap-5">
+          {/* Desktop Navigation */}
+          <nav className="hidden xl:flex items-center gap-2.5 2xl:gap-4 shrink">
             <a
               href="#inicio"
-              className="text-[11px] xl:text-xs font-semibold uppercase tracking-[0.16em] text-[#80643d] relative py-1 after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-amber-500 whitespace-nowrap"
+              className="text-[11px] 2xl:text-xs font-semibold uppercase tracking-[0.14em] text-[#b89040] relative py-1 after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#b89040] whitespace-nowrap"
             >
-              INÍCIO
+              Início
             </a>
             <a
-              href="#filosofia"
-              className="text-[11px] xl:text-xs font-medium uppercase tracking-[0.16em] text-[#5e574c] hover:text-[#2b261e] transition-colors whitespace-nowrap"
+              href="#atendimento"
+              className="text-[11px] 2xl:text-xs font-medium uppercase tracking-[0.14em] text-[#555660] hover:text-[#121316] transition-colors whitespace-nowrap"
             >
-              ATENDIMENTO
+              Atendimento Cível
             </a>
             <a
-              href="#conduta"
-              className="text-[11px] xl:text-xs font-medium uppercase tracking-[0.16em] text-[#5e574c] hover:text-[#2b261e] transition-colors whitespace-nowrap"
+              href="#advogada"
+              className="text-[11px] 2xl:text-xs font-medium uppercase tracking-[0.14em] text-[#555660] hover:text-[#121316] transition-colors whitespace-nowrap"
             >
-              COMPROMISSO
+              A Advogada
             </a>
             <a
-              href="#advogado"
-              className="text-[11px] xl:text-xs font-medium uppercase tracking-[0.16em] text-[#5e574c] hover:text-[#2b261e] transition-colors whitespace-nowrap"
+              href="#trabalhista"
+              className="text-[11px] 2xl:text-xs font-medium uppercase tracking-[0.14em] text-[#555660] hover:text-[#121316] transition-colors whitespace-nowrap"
             >
-              A ADVOGADA
+              Trabalhista
             </a>
             <a
               href="#avaliacoes"
-              className="text-[11px] xl:text-xs font-medium uppercase tracking-[0.16em] text-[#5e574c] hover:text-[#2b261e] transition-colors whitespace-nowrap flex items-center gap-1.5"
+              className="text-[11px] 2xl:text-xs font-medium uppercase tracking-[0.14em] text-[#555660] hover:text-[#121316] transition-colors whitespace-nowrap flex items-center gap-1"
             >
-              <span>AVALIAÇÕES</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#80643d]" />
+              <span>Avaliações (5,0 ★)</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#b89040]" />
             </a>
             <button
               onClick={() => setActiveModal("areas")}
-              className="text-[11px] xl:text-xs font-medium uppercase tracking-[0.16em] text-[#5e574c] hover:text-[#2b261e] transition-colors cursor-pointer whitespace-nowrap"
+              className="text-[11px] 2xl:text-xs font-medium uppercase tracking-[0.14em] text-[#555660] hover:text-[#121316] transition-colors cursor-pointer whitespace-nowrap"
             >
-              ÁREAS DE ATUAÇÃO
+              Áreas de Atuação
             </button>
-            <button
-              onClick={() => setActiveModal("contato")}
-              className="text-[11px] xl:text-xs font-medium uppercase tracking-[0.16em] text-[#5e574c] hover:text-[#2b261e] transition-colors cursor-pointer whitespace-nowrap"
+            <a
+              href="#contato"
+              className="text-[11px] 2xl:text-xs font-medium uppercase tracking-[0.14em] text-[#555660] hover:text-[#121316] transition-colors whitespace-nowrap"
             >
-              CONTATO
-            </button>
+              Contato
+            </a>
           </nav>
 
-          {/* Top Right Header CTA Button */}
+          {/* Desktop Right Quick Actions */}
           <div className="hidden xl:flex items-center gap-2.5 shrink-0">
             <a
-              href="https://www.instagram.com/advamandaferraz/"
+              href={getWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-[12px] bg-[#fffdf8] hover:bg-[#e9e0d1] border border-[#80643d]/20 hover:border-[#80643d]/35 flex items-center justify-center text-[#746c60] hover:text-[#80643d] transition-all shadow-sm group"
-              aria-label="Instagram @advamandaferraz"
-              title="Instagram @advamandaferraz"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-[#ffffff] hover:bg-[#f3eee2] border border-[#b89040]/35 text-[#121316] text-[11px] 2xl:text-xs font-semibold tracking-wide uppercase transition-all shadow-xs"
+              title="Falar no WhatsApp"
             >
-              <InstagramIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
+              <WhatsAppIcon className="w-4 h-4 text-emerald-600 shrink-0" />
+              <span>WhatsApp</span>
             </a>
-            <a
-              href={whatsappDirectUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-[12px] bg-[#eee7d9]/60 hover:bg-[#e8decd]/80 border border-amber-600/40 text-[#80643d] hover:text-[#2b261e] text-xs font-medium tracking-wide transition-all shadow-sm"
-            >
-              <Phone className="w-3.5 h-3.5 text-[#80643d]" />
-              <span>(31) 97541-2091</span>
-            </a>
-            <GlowingButton href="#consultoria" size="sm">
+            <GlowingButton href="#contato" size="sm" className="px-3.5 py-2 text-[11px] whitespace-nowrap">
               Agendar Consulta
             </GlowingButton>
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile menu toggle button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="xl:hidden p-2.5 text-[#5e574c] hover:text-[#2b261e] rounded-lg border border-[#80643d]/20 bg-[#fffdf8]"
+            className="xl:hidden p-2.5 text-[#303138] hover:text-[#121316] rounded-lg border border-[#b89040]/30 bg-[#ffffff] shadow-sm"
             aria-label="Abrir Menu"
           >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {mobileMenuOpen ? (
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
               ) : (
@@ -355,81 +376,70 @@ export default function Home() {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="xl:hidden bg-[#f7f4ed]/98 border-b border-[#80643d]/20 px-6 py-6 space-y-4  animate-in slide-in-from-top duration-200">
+          <div className="xl:hidden bg-[#faf8f5] border-b border-[#b89040]/30 px-6 py-6 space-y-4 shadow-xl">
             <a
               href="#inicio"
               onClick={() => setMobileMenuOpen(false)}
-              className="block text-xs font-semibold tracking-[0.18em] uppercase text-[#80643d]"
+              className="block text-xs font-semibold tracking-[0.18em] uppercase text-[#b89040]"
             >
               INÍCIO
             </a>
             <a
-              href="#filosofia"
+              href="#atendimento"
               onClick={() => setMobileMenuOpen(false)}
-              className="block text-xs font-medium tracking-[0.18em] uppercase text-[#5e574c] hover:text-[#2b261e]"
+              className="block text-xs font-medium tracking-[0.18em] uppercase text-[#474852] hover:text-[#121316]"
             >
-              ATENDIMENTO
+              ATENDIMENTO CÍVEL
             </a>
             <a
-              href="#conduta"
+              href="#advogada"
               onClick={() => setMobileMenuOpen(false)}
-              className="block text-xs font-medium tracking-[0.18em] uppercase text-[#5e574c] hover:text-[#2b261e]"
-            >
-              COMPROMISSO
-            </a>
-            <a
-              href="#advogado"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-xs font-medium tracking-[0.18em] uppercase text-[#5e574c] hover:text-[#2b261e]"
+              className="block text-xs font-medium tracking-[0.18em] uppercase text-[#474852] hover:text-[#121316]"
             >
               A ADVOGADA
             </a>
             <a
+              href="#trabalhista"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-xs font-medium tracking-[0.18em] uppercase text-[#474852] hover:text-[#121316]"
+            >
+              DIREITO DO TRABALHO
+            </a>
+            <a
               href="#avaliacoes"
               onClick={() => setMobileMenuOpen(false)}
-              className="block text-xs font-medium tracking-[0.18em] uppercase text-[#5e574c] hover:text-[#2b261e]"
+              className="block text-xs font-medium tracking-[0.18em] uppercase text-[#474852] hover:text-[#121316]"
             >
-              AVALIAÇÕES (5,0 ★)
+              AVALIAÇÕES (5,0 ★ GOOGLE)
             </a>
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 setActiveModal("areas");
               }}
-              className="block w-full text-left text-xs font-medium tracking-[0.18em] uppercase text-[#5e574c] hover:text-[#2b261e]"
+              className="block w-full text-left text-xs font-medium tracking-[0.18em] uppercase text-[#474852] hover:text-[#121316]"
             >
               ÁREAS DE ATUAÇÃO
             </button>
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                setActiveModal("contato");
-              }}
-              className="block w-full text-left text-xs font-medium tracking-[0.18em] uppercase text-[#5e574c] hover:text-[#2b261e]"
+            <a
+              href="#contato"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-xs font-medium tracking-[0.18em] uppercase text-[#474852] hover:text-[#121316]"
             >
-              CONTATO
-            </button>
-            <div className="pt-2 flex flex-col gap-3">
+              SEDE & CONTATO
+            </a>
+            <div className="pt-3 flex flex-col gap-3">
               <a
-                href={whatsappDirectUrl}
+                href={getWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 py-3 rounded-xl bg-[#eee7d9]/60 border border-[#806b48]/40 text-[#80643d] text-xs font-semibold uppercase tracking-wider"
+                className="flex items-center justify-center gap-2 py-3 rounded-lg bg-[#ffffff] border border-[#b89040]/40 text-[#121316] text-xs font-semibold uppercase tracking-wider shadow-sm"
               >
-                <Phone className="w-4 h-4 text-[#80643d]" />
-                <span>WhatsApp: (31) 97541-2091</span>
-              </a>
-              <a
-                href="https://www.instagram.com/advamandaferraz/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 py-3 rounded-xl bg-[#fffdf8] border border-[#80643d]/20 text-[#5e574c] hover:text-[#2b261e] text-xs font-semibold uppercase tracking-wider"
-              >
-                <InstagramIcon className="w-4 h-4 text-[#80643d]" />
-                <span>Instagram: @advamandaferraz</span>
+                <WhatsAppIcon className="w-4 h-4 text-emerald-600" />
+                <span>Conversar no WhatsApp</span>
               </a>
               <GlowingButton
-                href="#consultoria"
+                href="#contato"
                 onClick={() => setMobileMenuOpen(false)}
                 className="w-full"
               >
@@ -440,354 +450,214 @@ export default function Home() {
         )}
       </header>
 
-      {/* 3. FIRST FOLD: Hero Section */}
-      <div className="relative">
-        {/* Background Layer: Cinematic Library strictly confined to Hero */}
-        <div className="pointer-events-none absolute -top-24 inset-x-0 bottom-0 z-0 overflow-hidden">
-          <div className="absolute inset-0 scale-105 filter brightness-[0.56] contrast-[1.08] saturate-[0.72] transform-gpu">
-            <Image
-              src="/biblioteca-background.webp"
-              alt="Biblioteca jurídica do escritório"
-              fill
-              priority
-              className="object-cover object-center"
-              sizes="100vw"
-              quality={75}
-            />
-          </div>
-
-          <div className="absolute inset-0 bg-gradient-to-r from-[#f7f4ed]/88 via-[#f7f4ed]/58 to-[#f7f4ed]/28" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#f7f4ed]/40 via-transparent to-[#f7f4ed]/95" />
-
-        </div>
-
-        <section
-          id="inicio"
-          className="relative z-20 min-h-[calc(100vh-5rem)] flex flex-col justify-start lg:justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 lg:pt-12 pb-10"
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start lg:items-center flex-1 lg:my-auto">
-            {/* Left Column: Headlines & Action CTAs */}
-            <div className="lg:col-span-6 flex flex-col justify-start lg:justify-center space-y-4 sm:space-y-6 lg:space-y-7 pointer-events-auto">
-              {/* Kicker Badge */}
-              <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-md bg-[#fffdf8]/90 border border-[#806b48]/50 w-fit">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#80643d]" />
-                <span className="text-xs font-semibold tracking-[0.18em] text-[#80643d] uppercase">
-                  DIREITO DE FAMÍLIA & CONSUMIDOR
+      {/* 2. FIRST FOLD: Hero Section with Dra. Beatriz holding Themis (Statue of Justice) */}
+      <section
+        id="inicio"
+        className="relative z-20 min-h-[calc(100vh-5rem)] flex items-center py-12 lg:py-16 bg-radial-luxury overflow-hidden"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+            {/* Left Column: Headline, Narrative & CTAs */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="lg:col-span-7 flex flex-col space-y-6"
+            >
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ffffff] border border-[#b89040]/40 shadow-sm w-fit">
+                <span className="w-2 h-2 rounded-full bg-[#b89040] animate-pulse" />
+                <span className="text-[11px] sm:text-xs font-semibold tracking-[0.2em] text-[#9e782f] uppercase">
+                  OAB/MG • SÃO JOÃO DEL-REI & REGIONAL
                 </span>
               </div>
 
-              {/* Main Headline */}
-              <h1 className="flex flex-col">
-                <span className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-medium tracking-tight text-[#2b261e] leading-[1.12]">
-                  Orientação jurídica com
-                </span>
-                <span className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-semibold tracking-tight text-[#6f5934] leading-[1.12] mt-1">
-                  escuta, clareza e cuidado
-                </span>
+              {/* H1 Main Headline */}
+              <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5rem] font-semibold text-[#121316] leading-[1.14] tracking-tight">
+                Defesa combativa dos seus direitos com{" "}
+                <span className="text-[#b89040] italic font-normal">
+                  técnica, transparência
+                </span>{" "}
+                e resolutividade.
               </h1>
 
-              {/* Supporting Text */}
-              <p className="text-[#383229] text-lg sm:text-xl lg:text-[1.35rem] font-normal leading-relaxed max-w-xl">
-              Atendimento próximo em Direito de Família e do Consumidor, em Belo Horizonte e online para todo o Brasil.
+              {/* Subtitle / Value Proposition */}
+              <p className="text-[#454752] text-base sm:text-lg lg:text-xl font-normal leading-relaxed max-w-2xl">
+                Atendimento jurídico humanizado e artesanal pela <strong>Dra. Beatriz Rozzetto</strong>.
+                Especialista na proteção de pessoas e patrimônios em Direito Civil, Trabalhista e de Família, combinando rigor técnico com atendimento sem burocracia ou juridiquês.
               </p>
 
               {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-1">
-                <GlowingButton href="#consultoria" size="md" className="w-full sm:w-auto py-3.5 text-xs tracking-[0.16em]">
-                  Conversar com a Dra. Amanda
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
+                <GlowingButton href="#contato" size="lg" className="w-full sm:w-auto">
+                  Agendar Consulta Estratégica
                 </GlowingButton>
                 <a
-                  href={whatsappDirectUrl}
+                  href={getWhatsAppUrl("Olá, Dra. Beatriz! Gostaria de uma orientação jurídica para o meu caso.")}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative inline-flex items-center justify-center rounded-lg font-semibold uppercase bg-[#fffdf8] hover:bg-[#e9e0d1] text-[#403a31] hover:text-[#2b261e] border border-[#80643d]/25 hover:border-[#806b48] px-7 py-3.5 text-xs tracking-[0.14em] transition-colors duration-200 text-center cursor-pointer w-full sm:w-auto gap-2"
+                  className="inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-lg bg-[#ffffff] hover:bg-[#f4efe4] text-[#121316] hover:text-[#000000] border border-[#b89040]/40 hover:border-[#b89040]/80 text-xs sm:text-sm font-semibold tracking-wide uppercase transition-all shadow-sm group cursor-pointer"
                 >
-                  <Phone className="w-4 h-4 text-[#80643d] group-hover:scale-110 transition-transform" />
+                  <WhatsAppIcon className="w-4 h-4 text-emerald-600 group-hover:scale-110 transition-transform" />
                   <span>Falar no WhatsApp</span>
                 </a>
               </div>
 
-              {/* Credentials Line */}
-              <div className="flex items-center gap-3 text-xs text-[#746c60] pt-1">
-                <div className="h-px w-8 bg-amber-500/60" />
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#80643d]" />
-                  Atendimento em Belo Horizonte • Online para todo o Brasil
-                </span>
+              {/* Trust Indicators */}
+              <div className="pt-3 border-t border-[#b89040]/20 flex flex-wrap items-center gap-y-2 gap-x-6 text-xs text-[#5a5c68]">
+                <div className="flex items-center gap-1.5">
+                  <Star className="w-4 h-4 text-[#b89040] fill-[#b89040]" />
+                  <span className="font-semibold text-[#121316]">5,0 de 5,0</span>
+                  <span>(17 avaliações no Google)</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <MapPin className="w-4 h-4 text-[#b89040]" />
+                  <span>Av. Leite de Castro, 125 • Fábricas</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Shield className="w-4 h-4 text-[#b89040]" />
+                  <span>Atendimento Presencial e Online</span>
+                </div>
               </div>
-            </div>
+            </motion.div>
 
-            {/* Spacer Column in Center for 3D Statue View */}
-            <div className="hidden lg:block lg:col-span-1" />
+            {/* Right Column: Architectural Roman Arch Portal with Double Gold Hairline & Floating Seal */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+              className="lg:col-span-5 relative flex justify-center lg:justify-end pt-4 lg:pt-0"
+            >
+              <div className="relative w-full max-w-[380px] sm:max-w-[420px] xl:max-w-[450px]">
+                {/* 1. Ambient Warm Halo radiating behind the arch */}
+                <div className="absolute -inset-6 rounded-t-[260px] rounded-b-[60px] bg-gradient-to-tr from-[#b89040]/30 via-[#d8b979]/20 to-transparent blur-2xl pointer-events-none" />
 
-            {/* Right Column: Request a Consultation Form Card */}
-            <div id="consultoria" className="lg:col-span-5 relative pointer-events-auto group mt-4 lg:mt-0">
-              <div className="relative rounded-xl bg-[#fffdf8] border border-[#80643d]/25 p-6 sm:p-8 shadow-xl">
-                <div className="mb-6">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#eee7d9]/80 border border-[#806b48]/40 text-[10px] font-semibold tracking-[0.2em] text-[#80643d] uppercase">
-                      ATENDIMENTO DIRETO
-                    </span>
-                    <span className="text-[11px] text-[#746c60] font-medium">Belo Horizonte / Online</span>
+                {/* 2. Classical Architectural Gold Corner Brackets */}
+                <div className="absolute -top-3 -left-3 w-8 h-8 border-t-2 border-l-2 border-[#b89040]/70 rounded-tl-md pointer-events-none z-20" />
+                <div className="absolute -top-3 -right-3 w-8 h-8 border-t-2 border-r-2 border-[#b89040]/70 rounded-tr-md pointer-events-none z-20" />
+
+                {/* 3. Outer Architectural Portal Frame (Concentric Gold Hairline Offset) */}
+                <div className="relative p-2.5 sm:p-3.5 rounded-t-[210px] sm:rounded-t-[250px] rounded-b-[32px] sm:rounded-b-[40px] border border-[#b89040]/45 bg-gradient-to-b from-[#faf8f5]/60 via-[#ffffff]/40 to-[#faf8f5]/80 backdrop-blur-xs shadow-[0_20px_50px_rgba(184,144,64,0.18)]">
+                  {/* Inner Arch with deep obsidian backing */}
+                  <div className="relative rounded-t-[195px] sm:rounded-t-[235px] rounded-b-[26px] sm:rounded-b-[32px] overflow-hidden border-[1.5px] border-[#b89040]/70 bg-[#0f1013] shadow-[inset_0_0_30px_rgba(0,0,0,0.6)] group">
+                    {/* The Image inside the Roman Arch Portal */}
+                    <div className="relative h-[480px] sm:h-[540px] w-full">
+                      <Image
+                        src="/dra-beatriz-themis.webp"
+                        alt="Dra. Beatriz Rozzetto, advogada em São João del-Rei, segurando a estátua de Têmis / Deusa da Justiça"
+                        fill
+                        priority
+                        className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                        sizes="(max-width: 1024px) 100vw, 450px"
+                        quality={90}
+                      />
+                      {/* Subtle bottom gradient to ground the portrait */}
+                      <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#0f1013] via-[#0f1013]/60 to-transparent pointer-events-none" />
+                    </div>
+
+                    {/* Integrated Monogram & Title Ribbon along the lower curve */}
+                    <div className="absolute bottom-3 inset-x-3 sm:bottom-4 sm:inset-x-4 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-[#141519]/90 backdrop-blur-md border border-[#b89040]/40 flex items-center justify-between shadow-lg">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-[#1f2027] border border-[#b89040]/50 flex items-center justify-center shrink-0">
+                          <Scale className="w-5 h-5 text-[#b89040]" strokeWidth={1.75} />
+                        </div>
+                        <div>
+                          <h3 className="font-serif text-base sm:text-lg font-bold text-[#faf6ed] leading-tight">
+                            Dra. Beatriz Rozzetto
+                          </h3>
+                          <p className="text-[10px] sm:text-[11px] font-semibold text-[#b89040] uppercase tracking-wider">
+                            Advogada Titular • OAB/MG
+                          </p>
+                        </div>
+                      </div>
+                      <div className="hidden xs:flex flex-col items-end">
+                        <div className="flex gap-0.5 text-[#b89040]">
+                          {[...Array(5)].map((_, i) => (
+                            <Star key={i} className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-[#b89040]" />
+                          ))}
+                        </div>
+                        <span className="text-[10px] text-[#c7bba8] mt-0.5 font-medium">5,0 no Google</span>
+                      </div>
+                    </div>
                   </div>
-                  <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-wide text-[#2b261e] uppercase">
-                    FALE SOBRE O SEU CASO
-                  </h2>
-                  <p className="text-[#746c60] text-xs sm:text-sm mt-1.5 leading-relaxed font-light">
-                    Conte brevemente como podemos ajudar. Sua mensagem seguirá pelo WhatsApp.
-                  </p>
                 </div>
 
-                {formSubmitted ? (
-                  <div className="py-10 text-center space-y-3 bg-[#f2ede4] border border-[#806b48]/50 rounded-xl p-6 animate-in fade-in zoom-in-95 duration-300">
-                    <div className="w-14 h-14 rounded-full bg-[#8b7047]/20 border border-[#806b48]/60 flex items-center justify-center mx-auto text-[#80643d] p-3">
-                      <CheckCircle2 className="w-8 h-8" />
-                    </div>
-                    <h3 className="font-serif text-lg font-bold text-[#2b261e]">Solicitação Recebida!</h3>
-                    <p className="text-xs text-[#5e574c] leading-relaxed max-w-xs mx-auto">
-                      Redirecionando para o WhatsApp da Dra. Amanda Ferraz...
-                    </p>
+                {/* 4. Floating Circular Seal of Excellence (Chancela Flutuante) on the bottom-left */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8, rotate: -8 }}
+                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                  transition={{ duration: 0.6, delay: 0.45 }}
+                  className="absolute -bottom-4 -left-3 sm:-left-5 z-30 p-2.5 sm:p-3 rounded-2xl bg-[#ffffff] border border-[#b89040]/60 shadow-[0_12px_28px_rgba(18,19,22,0.18)] flex items-center gap-3 max-w-[210px] sm:max-w-[230px]"
+                >
+                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#b89040] via-[#c5a559] to-[#7e5e22] flex items-center justify-center text-[#121316] shrink-0 shadow-sm font-bold text-xs">
+                    ★
                   </div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="space-y-3.5">
-                    <div>
-                      <label htmlFor="nome" className="sr-only">Nome Completo</label>
-                      <input
-                        id="nome"
-                        type="text"
-                        required
-                        placeholder="Nome Completo"
-                        value={formData.nome}
-                        onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-[#fffdf8] border border-[#80643d]/20 text-[#2b261e] placeholder-[#8b8377] text-sm focus:outline-none focus:border-[#806b48] focus:ring-1 focus:ring-amber-500 transition-all"
-                      />
-                    </div>
+                  <div className="leading-tight">
+                    <span className="text-[11px] font-bold text-[#121316] block uppercase tracking-wider">
+                      Nota Máxima 5.0
+                    </span>
+                    <span className="text-[10px] text-[#705e3b] font-medium block">
+                      17 avaliações verificadas
+                    </span>
+                  </div>
+                </motion.div>
 
-                    <div>
-                      <label htmlFor="telefone" className="sr-only">Telefone / WhatsApp</label>
-                      <input
-                        id="telefone"
-                        type="tel"
-                        required
-                        placeholder="Telefone / WhatsApp com DDD"
-                        value={formData.telefone}
-                        onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-[#fffdf8] border border-[#80643d]/20 text-[#2b261e] placeholder-[#8b8377] text-sm focus:outline-none focus:border-[#806b48] focus:ring-1 focus:ring-amber-500 transition-all"
-                      />
-                    </div>
-
-                    <div>
-                      <label htmlFor="descricao" className="sr-only">Breve Descrição</label>
-                      <textarea
-                        id="descricao"
-                        rows={3}
-                        placeholder="Breve descrição do seu caso ou necessidade (Confidencial)"
-                        value={formData.descricao}
-                        onChange={(e) => setFormData({ ...formData, descricao: e.target.value })}
-                        className="w-full px-4 py-2.5 rounded-xl bg-[#fffdf8] border border-[#80643d]/20 text-[#2b261e] placeholder-[#8b8377] text-sm focus:outline-none focus:border-[#806b48] focus:ring-1 focus:ring-amber-500 transition-all resize-none"
-                      />
-                    </div>
-
-                    <button
-                      type="submit"
-                      className="w-full py-3.5 rounded-lg bg-[#80643d] hover:bg-[#70532d] text-white font-semibold text-xs tracking-[0.16em] uppercase transition-colors duration-200 border border-[#a78c5d]/50 cursor-pointer flex items-center justify-center gap-2"
-                    >
-                      <span>ENVIAR SOLICITAÇÃO</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
-
-                    <div className="pt-1 flex items-center justify-center gap-2 text-[11px] text-[#746c60]">
-                      <Shield className="w-3.5 h-3.5 text-[#80643d]" />
-                      <span>Sigilo profissional e confidencialidade resguardados pela OAB</span>
-                    </div>
-                  </form>
-                )}
+                {/* 5. Floating Badge Top-Right: Sede São João del-Rei */}
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.55 }}
+                  className="absolute -top-3 -right-2 sm:-right-4 z-30 px-3 py-1.5 rounded-full bg-[#121316] border border-[#b89040]/60 shadow-lg flex items-center gap-1.5"
+                >
+                  <span className="w-2 h-2 rounded-full bg-[#b89040] animate-pulse" />
+                  <span className="text-[10px] sm:text-[11px] font-semibold text-[#faf6ed] tracking-wider uppercase">
+                    São João del-Rei
+                  </span>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
           </div>
+        </div>
+      </section>
 
-          {/* Scroll down prompt */}
-          <div className="pt-8 pb-2 flex justify-center items-center gap-2 text-xs text-[#746c60]">
-            <span className="tracking-widest uppercase text-[10px]">Role para conhecer a atuação</span>
-            <svg className="w-4 h-4 text-[#817969]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
-          </div>
-        </section>
-      </div>
-
-      {/* 4. Bottom Highlights Bar (3 Highlights) */}
-      <section className="relative z-20 w-full border-t border-b border-[#80643d]/20 bg-[#fffdf8]/80  shadow-lg">
+      {/* 3. 4 Highlights Pillars Section */}
+      <section className="relative z-20 w-full border-t border-b border-[#b89040]/25 bg-[#ffffff] shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {HIGHLIGHTS.map((item, idx) => (
               <motion.div
                 key={item.title}
                 custom={idx}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: false, amount: 0.25 }}
+                viewport={{ once: true, amount: 0.2 }}
                 variants={highlightCardVariants}
-                className="group relative flex flex-col sm:flex-row items-start gap-5 p-6 sm:p-7 rounded-2xl bg-[#fffdf8]/85 hover:bg-[#eee8dc]/90  border border-[#80643d]/20 hover:border-[#806b48]/50 shadow-md transition-all duration-300"
+                className="group relative flex flex-col p-6 rounded-xl bg-[#faf8f5] hover:bg-[#f5f1e8] border border-[#b89040]/20 hover:border-[#b89040]/50 transition-all duration-300 shadow-sm"
               >
-                <motion.div
-                  variants={highlightItemVariants}
-                  className="relative z-10 shrink-0 w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center rounded-xl bg-[#f7f4ed] border border-[#80643d]/20 group-hover:border-[#806b48]/50 text-[#80643d] transition-all duration-300 shadow-sm"
-                >
+                <div className="w-12 h-12 rounded-lg bg-[#ffffff] border border-[#b89040]/30 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-xs">
                   {item.icon}
-                </motion.div>
-
-                <div className="relative z-10 flex flex-col flex-1 overflow-hidden">
-                  <motion.h3
-                    variants={highlightItemVariants}
-                    className="font-serif text-lg sm:text-xl font-bold text-[#2b261e] tracking-wide uppercase leading-tight group-hover:text-[#6f5934] transition-colors"
-                  >
-                    {item.title}
-                  </motion.h3>
-
-                  <motion.p
-                    variants={highlightItemVariants}
-                    className="text-xs sm:text-sm text-[#5e574c] font-light mt-1.5 leading-relaxed"
-                  >
-                    {item.description}
-                  </motion.p>
-
-                  <motion.div
-                    variants={highlightLineVariants}
-                    className="h-0.5 w-8 bg-amber-500/60 group-hover:w-14 group-hover:bg-amber-400 transition-all duration-300 mt-3"
-                  />
                 </div>
+                <h3 className="font-serif text-base sm:text-lg font-bold text-[#121316] tracking-wide uppercase">
+                  {item.title}
+                </h3>
+                <p className="text-xs sm:text-sm text-[#50525d] font-normal mt-2 leading-relaxed">
+                  {item.description}
+                </p>
+                <div className="mt-4 h-0.5 w-8 bg-[#b89040]/50 group-hover:w-16 group-hover:bg-[#b89040] transition-all duration-300" />
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 5. SECOND FOLD: Filosofia de Atuação */}
+      {/* 4. SECOND FOLD: Atendimento Cível & Rigor Técnico (SINGLE IMAGE: dra-beatriz-direito-civil.jpg) */}
       <section
-        id="filosofia"
-        className="relative min-h-screen flex items-center overflow-hidden bg-[#100d09] text-[#f7f1e6]"
+        id="atendimento"
+        className="relative z-20 w-full py-20 sm:py-28 bg-[#121316] text-[#faf6ed] overflow-hidden"
       >
-        {/* Cinematic Deeply Blurred Library Background */}
-        <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-          <div className="absolute inset-0 scale-110 filter blur-[18px] brightness-[0.32] contrast-[1.05] saturate-[0.65] transform-gpu">
-            <Image
-              src="/imageye___-_imgi_54_683876091_18582503086018857_3113475253291343600_n.jpg"
-              alt="Dra. Amanda Ferraz, advogada, em seu escritório"
-              fill
-              className="object-cover object-center"
-              sizes="100vw"
-              quality={75}
-            />
-          </div>
-
-          <div className="absolute inset-0 bg-gradient-to-r from-[#100d09]/90 via-[#100d09]/78 to-[#100d09]/48" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#100d09]/55 via-transparent to-[#100d09]/96" />
-        </div>
-
-        {/* Content Container */}
-        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-28 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center w-full">
-            {/* Left Column */}
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.3 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="lg:col-span-7 flex flex-col space-y-7 pointer-events-auto bg-[#19140e]/95 p-6 sm:p-10 lg:p-12 rounded-2xl border border-[#a78c5d]/35 shadow-xl"
-            >
-              <div className="inline-flex items-center gap-2.5 px-3.5 py-1 rounded-full bg-[#251d13] border border-[#a78c5d]/40 w-fit">
-                <span className="w-2 h-2 rounded-full bg-amber-400" />
-                <span className="text-xs font-semibold tracking-[0.22em] text-[#c5b28d] uppercase">
-                  ATENDIMENTO JURÍDICO HUMANIZADO
-                </span>
-              </div>
-
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-[#f7f1e6] leading-[1.15]">
-                Seus direitos merecem atenção. <br />
-                <span className="text-[#c5b28d]">
-                  Conte com orientação clara e responsável.
-                </span>
-              </h2>
-
-              <p className="text-[#d3cabb] text-base sm:text-lg font-light leading-relaxed">
-                Cada situação tem sua história e merece ser compreendida com cuidado. Dra. Amanda Ferraz oferece atendimento atencioso, explica os caminhos possíveis e acompanha cada etapa com responsabilidade, transparência e sigilo.
-              </p>
-
-              {/* Bullet Points */}
-              <div className="space-y-3.5 pt-1">
-                <div className="flex items-start gap-4 p-3.5 rounded-xl bg-[#211a11] border border-white/10 hover:border-[#a78c5d]/40 transition-colors">
-                  <div className="shrink-0 mt-0.5 p-2 rounded-lg bg-[#312818]/70 border border-[#a78c5d]/30 text-[#c5b28d]">
-                    <Building2 className="w-4 h-4" strokeWidth={1.75} />
-                  </div>
-                  <div className="text-sm leading-relaxed">
-                    <strong className="text-[#f7f1e6] font-semibold block sm:inline mr-1.5">
-                      Direito de Família:
-                    </strong>
-                    <span className="text-[#d3cabb] font-light">
-                      Divórcio, pensão alimentícia, guarda e orientação em momentos de mudança familiar.
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 p-3.5 rounded-xl bg-[#211a11] border border-white/10 hover:border-[#a78c5d]/40 transition-colors">
-                  <div className="shrink-0 mt-0.5 p-2 rounded-lg bg-[#312818]/70 border border-[#a78c5d]/30 text-[#c5b28d]">
-                    <Gavel className="w-4 h-4" strokeWidth={1.75} />
-                  </div>
-                  <div className="text-sm leading-relaxed">
-                    <strong className="text-[#f7f1e6] font-semibold block sm:inline mr-1.5">
-                      Direito do Consumidor:
-                    </strong>
-                    <span className="text-[#d3cabb] font-light">
-                      Orientação em cobranças indevidas, questões bancárias, Serasa e golpes digitais.
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 p-3.5 rounded-xl bg-[#211a11] border border-white/10 hover:border-[#a78c5d]/40 transition-colors">
-                  <div className="shrink-0 mt-0.5 p-2 rounded-lg bg-[#312818]/70 border border-[#a78c5d]/30 text-[#c5b28d]">
-                    <Users className="w-4 h-4" strokeWidth={1.75} />
-                  </div>
-                  <div className="text-sm leading-relaxed">
-                    <strong className="text-[#f7f1e6] font-semibold block sm:inline mr-1.5">
-                      Atendimento próximo:
-                    </strong>
-                    <span className="text-[#d3cabb] font-light">
-                      Escuta atenta, explicações claras e acompanhamento com respeito em todas as etapas.
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-                <GlowingButton href="#consultoria" size="md">
-                  Converse sobre seu caso
-                </GlowingButton>
-                <button
-                  onClick={() => setActiveModal("areas")}
-                  className="inline-flex items-center justify-center px-6 py-3.5 rounded-lg bg-[#211a11] hover:bg-[#292014] text-[#f7f1e6] font-semibold text-xs tracking-[0.18em] uppercase transition-all duration-300 border border-[#a78c5d]/35 hover:border-[#a78c5d]/60 text-center cursor-pointer"
-                >
-                  Conhecer áreas de atuação
-                </button>
-              </div>
-            </motion.div>
-
-            {/* Right Column: 2D Lady Justice artwork enters from the right */}
-            <ScrollTriggeredStatue />
-          </div>
-        </div>
-      </section>
-
-      {/* 6. NOVA DOBRA: Compromisso com cada cliente */}
-      <section
-        id="conduta"
-        className="relative z-20 w-full py-20 sm:py-28 bg-gradient-to-b from-[#f7f4ed] via-[#f2ede4] to-[#f7f4ed] border-t border-b border-[#80643d]/20 overflow-hidden"
-      >
-        {/* Ambient Backlight Behind Lawyer */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-            {/* Left Column: Text in the opposite direction of his gaze (since he looks to the left) */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            {/* Left Column: Copy & Specialties */}
             <motion.div
               initial={{ opacity: 0, x: -35 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -795,362 +665,356 @@ export default function Home() {
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="lg:col-span-7 flex flex-col space-y-6"
             >
-              <div className="inline-flex items-center gap-2.5 px-3.5 py-1 rounded-full bg-[#fffdf8] border border-[#806b48]/40 w-fit">
-                <Sparkles className="w-3.5 h-3.5 text-[#80643d]" />
-                <span className="text-xs font-semibold tracking-[0.22em] text-[#80643d] uppercase">
-                  COMPROMISSO COM CADA HISTÓRIA
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#1a1b21] border border-[#b89040]/40 w-fit">
+                <span className="w-2 h-2 rounded-full bg-[#b89040]" />
+                <span className="text-xs font-semibold tracking-[0.2em] text-[#d8b979] uppercase">
+                  DIREITO CIVIL & PATRIMONIAL
                 </span>
               </div>
 
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-[#2b261e] leading-[1.15]">
-                Acolhimento, clareza e dedicação em cada atendimento.
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-[#faf6ed] leading-[1.16]">
+                Rigor técnico e estudo aprofundado para causas de{" "}
+                <span className="text-[#b89040] italic font-normal">alta relevância.</span>
               </h2>
 
-              <p className="text-[#5e574c] text-base sm:text-lg font-light leading-relaxed">
-                Em situações delicadas, compreender seus direitos e saber quais são os próximos passos faz diferença. Dra. Amanda Ferraz atende cada pessoa com atenção, explica as possibilidades com clareza e atua de forma diligente em Belo Horizonte e em todo o Brasil.
+              <p className="text-[#c7bba8] text-base sm:text-lg font-light leading-relaxed">
+                No Direito Civil, não existem soluções genéricas. Seja na elaboração de um contrato seguro, na cobrança judicial de dívidas, na reparação de danos ou na partilha de patrimônio familiar, a <strong>Dra. Beatriz Rozzetto</strong> estuda detalhadamente cada prova e jurisprudência para blindar seus interesses.
               </p>
 
-              {/* Grid of Badges / Pillars */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-                <div className="p-4 rounded-xl bg-[#fffdf8] border border-[#80643d]/20 hover:border-[#806b48]/40 transition-colors">
-                  <span className="text-2xl mb-2 block">⚖️</span>
-                  <h4 className="text-xs font-bold text-[#2b261e] uppercase tracking-wider">Acolhimento</h4>
-                  <p className="text-[11px] text-[#746c60] mt-1 leading-relaxed">
-                    Atendimento atento, respeitoso e com escuta verdadeira.
+              {/* Pillars / Specialties Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
+                <div className="p-4 rounded-xl bg-[#181920] border border-white/10 hover:border-[#b89040]/40 transition-colors">
+                  <h4 className="text-sm font-bold text-[#faf6ed] uppercase flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#b89040] shrink-0" />
+                    <span>Contratos & Negócios</span>
+                  </h4>
+                  <p className="text-xs text-[#a99e8d] mt-1.5 leading-relaxed">
+                    Elaboração, análise preventiva e rescisão de instrumentos contratuais seguros.
                   </p>
                 </div>
 
-                <div className="p-4 rounded-xl bg-[#fffdf8] border border-[#80643d]/20 hover:border-[#806b48]/40 transition-colors">
-                  <span className="text-2xl mb-2 block">🌐</span>
-                  <h4 className="text-xs font-bold text-[#2b261e] uppercase tracking-wider">Clareza</h4>
-                  <p className="text-[11px] text-[#746c60] mt-1 leading-relaxed">
-                    Orientação direta para entender seus direitos e os caminhos possíveis.
+                <div className="p-4 rounded-xl bg-[#181920] border border-white/10 hover:border-[#b89040]/40 transition-colors">
+                  <h4 className="text-sm font-bold text-[#faf6ed] uppercase flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#b89040] shrink-0" />
+                    <span>Indenizações & Danos</span>
+                  </h4>
+                  <p className="text-xs text-[#a99e8d] mt-1.5 leading-relaxed">
+                    Ações de reparação civil por danos morais, materiais e cobranças indevidas.
                   </p>
                 </div>
 
-                <div className="p-4 rounded-xl bg-[#fffdf8] border border-[#80643d]/20 hover:border-[#806b48]/40 transition-colors">
-                  <span className="text-2xl mb-2 block">🛡️</span>
-                  <h4 className="text-xs font-bold text-[#2b261e] uppercase tracking-wider">Responsabilidade</h4>
-                  <p className="text-[11px] text-[#746c60] mt-1 leading-relaxed">
-                    Acompanhamento cuidadoso e comunicação transparente.
+                <div className="p-4 rounded-xl bg-[#181920] border border-white/10 hover:border-[#b89040]/40 transition-colors">
+                  <h4 className="text-sm font-bold text-[#faf6ed] uppercase flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#b89040] shrink-0" />
+                    <span>Família & Sucessões</span>
+                  </h4>
+                  <p className="text-xs text-[#a99e8d] mt-1.5 leading-relaxed">
+                    Divórcios, guarda, pensão alimentícia, inventários e partilha de bens com acolhimento.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-[#181920] border border-white/10 hover:border-[#b89040]/40 transition-colors">
+                  <h4 className="text-sm font-bold text-[#faf6ed] uppercase flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#b89040] shrink-0" />
+                    <span>Cobranças & Patrimônio</span>
+                  </h4>
+                  <p className="text-xs text-[#a99e8d] mt-1.5 leading-relaxed">
+                    Recuperação de créditos, execuções de títulos e proteção de bens legítimos.
                   </p>
                 </div>
               </div>
 
-              {/* Direct CTA */}
+              {/* Actions */}
               <div className="pt-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-                <a
-                  href={whatsappDirectUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-lg bg-[#80643d] hover:bg-[#70532d] text-white font-semibold text-xs tracking-[0.14em] uppercase transition-colors duration-200 cursor-pointer"
+                <GlowingButton href="#contato" size="md">
+                  Consultar Questão Cível
+                </GlowingButton>
+                <button
+                  onClick={() => setActiveModal("areas")}
+                  className="inline-flex items-center justify-center px-6 py-3.5 rounded-lg bg-[#181920] hover:bg-[#23242c] text-[#faf6ed] font-medium text-xs tracking-[0.16em] uppercase transition-all border border-[#b89040]/30 hover:border-[#b89040]/70 cursor-pointer"
                 >
-                  <Phone className="w-4 h-4 text-[#6f5934]" />
-                  <span>Falar com a Dra. Amanda</span>
-                </a>
-                <a
-                  href="#advogado"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-[#fffdf8] hover:bg-[#e9e0d1] text-[#5e574c] hover:text-[#2b261e] font-semibold text-xs tracking-[0.18em] uppercase transition-all duration-300 border border-[#80643d]/20 hover:border-[#806b48]/50"
-                >
-                  <span>Conhecer a advogada</span>
-                  <ChevronRight className="w-4 h-4 text-[#80643d]" />
-                </a>
+                  Conhecer Todas as Áreas
+                </button>
               </div>
             </motion.div>
 
-            {/* Right Column: Marca da Dra. Amanda Ferraz */}
+            {/* Right Column: SINGLE IMAGE IN FOLD 2 (Dra. Beatriz with Direito Civil book) */}
             <motion.div
-              initial={{ opacity: 0, x: 40, scale: 0.95 }}
+              initial={{ opacity: 0, x: 35, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.85, ease: "easeOut" }}
-              className="lg:col-span-5 relative flex justify-center lg:justify-end items-end pt-6 lg:pt-0"
+              className="lg:col-span-5 relative flex justify-center lg:justify-end"
             >
-              <div className="relative w-full max-w-[420px] lg:max-w-[460px]">
-                {/* Main Lawyer Image Cutout - Sem obstruções */}
-                <Image
-                  src="/imageye___-_imgi_10_656865887_18572500648018857_7151245361150465561_n.jpg"
-                  width={800}
-                  height={800}
-                  alt="Dra. Amanda Ferraz, advogada, em seu escritório"
-                  className="relative z-10 w-full h-auto object-contain object-bottom filter brightness-[0.98] contrast-[1.04]"
-                />
-
-                {/* Subtle base gradient fade */}
-                <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#f7f4ed] via-[#f7f4ed]/70 to-transparent z-15 pointer-events-none" />
+              <div className="relative w-full max-w-[420px] rounded-2xl overflow-hidden border border-[#b89040]/40 bg-[#1a1b21] shadow-2xl">
+                <div className="relative h-[480px] sm:h-[540px] w-full">
+                  <Image
+                    src="/dra-beatriz-direito-civil.jpg"
+                    alt="Dra. Beatriz Rozzetto estudando com livro de Direito Civil"
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 1024px) 100vw, 420px"
+                    quality={85}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#121316] via-transparent to-transparent opacity-85" />
+                </div>
+                <div className="absolute bottom-5 inset-x-5 p-4 rounded-xl bg-[#121316]/90 backdrop-blur-sm border border-[#b89040]/30">
+                  <p className="text-xs text-[#d8b979] font-medium uppercase tracking-wider">
+                    Fundamentação Doutrinária & Rigor
+                  </p>
+                  <p className="text-sm text-[#faf6ed] font-serif font-bold mt-1">
+                    Análise artesanal para a máxima segurança do seu patrimônio.
+                  </p>
+                </div>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* 7. DA ADVOGADA TITULAR (Substitui o antigo Corpo Diretivo) */}
+      {/* 5. THIRD FOLD: A Advogada Titular (SINGLE IMAGE: dra-beatriz-livro-sorrindo.jpg) */}
       <section
-        id="advogado"
-        className="relative z-20 w-full py-20 sm:py-28 bg-[#f7f4ed] border-b border-[#80643d]/20 overflow-hidden"
+        id="advogada"
+        className="relative z-20 w-full py-20 sm:py-28 bg-[#faf8f5] border-b border-[#b89040]/25 overflow-hidden"
       >
-        {/* Background Ambient Glow */}
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Section Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            className="text-center max-w-3xl mx-auto mb-14 sm:mb-18 flex flex-col items-center"
-          >
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1 rounded-full bg-[#fffdf8] border border-[#806b48]/40 mb-4">
-              <span className="w-2 h-2 rounded-full bg-amber-400" />
-              <span className="text-xs font-semibold tracking-[0.22em] text-[#80643d] uppercase">
-                ADVOCACIA EM BELO HORIZONTE
-              </span>
-            </div>
-
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-[#2b261e] leading-[1.15] mb-4">
-              Dra. Amanda Ferraz
-            </h2>
-
-            <p className="text-[#5e574c] text-base sm:text-lg font-light leading-relaxed">
-              Advogada em Belo Horizonte, com atuação em Direito de Família e Direito do Consumidor.
-            </p>
-          </motion.div>
-
-          {/* 3 Blocos Editoriais Separados - Cada foto com seu respectivo bloco de texto */}
-          <div className="space-y-10 sm:space-y-14">
-            {/* Direito de Família */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            {/* Left Column: SINGLE IMAGE IN FOLD 3 (Dra. Beatriz smiling looking back with open book) */}
             <motion.div
-              initial={{ opacity: 0, y: 35 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.75, ease: "easeOut" }}
-              className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center bg-[#f2ede4]/90  border border-[#80643d]/20 rounded-2xl p-6 sm:p-10 lg:p-12 shadow-xl hover:border-[#806b48]/40 transition-colors"
+              initial={{ opacity: 0, x: -35, scale: 0.96 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.85, ease: "easeOut" }}
+              className="lg:col-span-5 relative flex justify-center lg:justify-start order-2 lg:order-1"
             >
-              <div className="lg:col-span-6 relative w-full h-[360px] sm:h-[440px] rounded-xl overflow-hidden border border-[#80643d]/20 bg-[#eee9df] shadow-lg group">
-                <Image
-                  src="/imageye___-_imgi_54_683876091_18582503086018857_3113475253291343600_n.jpg"
-                  alt="Dra. Amanda Ferraz, advogada, em seu escritório"
-                  fill
-                  className="object-cover object-top scale-[1.25] sm:scale-[1.4] -translate-y-[4%] sm:-translate-y-[8%]"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  quality={75}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#f7f4ed] via-transparent to-transparent opacity-60 pointer-events-none" />
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-[#5e574c] pointer-events-none">
-                  <span className="bg-[#f7f4ed]/85  px-3 py-1 rounded-full border border-[#80643d]/20 text-[11px]">
-                    Atendimento jurídico
-                  </span>
-                  <span className="bg-[#f7f4ed]/85  px-3 py-1 rounded-full border border-[#80643d]/20 text-[11px] text-[#80643d]">
-                    Belo Horizonte
-                  </span>
+              <div className="relative w-full max-w-[420px] rounded-2xl overflow-hidden border border-[#b89040]/35 bg-[#ffffff] shadow-2xl">
+                <div className="relative h-[480px] sm:h-[540px] w-full">
+                  <Image
+                    src="/dra-beatriz-livro-sorrindo.jpg"
+                    alt="Dra. Beatriz Rozzetto sorridente com livro, demonstrando acolhimento e postura dedicada"
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 1024px) 100vw, 420px"
+                    quality={85}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#121316]/75 via-transparent to-transparent opacity-70 pointer-events-none" />
                 </div>
-              </div>
-
-              <div className="lg:col-span-6 flex flex-col space-y-5">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#eee7d9]/70 border border-[#806b48]/40 w-fit">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                  <span className="text-[11px] font-semibold tracking-[0.2em] text-[#80643d] uppercase">
-                    DIREITO DE FAMÍLIA
+                <div className="absolute bottom-5 inset-x-5 p-4 rounded-xl bg-[#ffffff]/95 backdrop-blur-md border border-[#b89040]/30 shadow-md">
+                  <span className="text-[10px] font-semibold text-[#b89040] uppercase tracking-widest block">
+                    Advocacia com Propósito
                   </span>
-                </div>
-
-                <h3 className="font-serif text-2xl sm:text-3xl lg:text-[32px] font-bold text-[#2b261e] leading-tight">
-                  Divórcio, Guarda e Pensão com Orientação Cuidadosa
-                </h3>
-
-                <p className="text-[#5e574c] text-sm sm:text-base font-light leading-relaxed">
-                  Questões familiares podem envolver decisões importantes e emoções intensas. A Dra. Amanda oferece orientação jurídica em divórcio, guarda e pensão alimentícia, com escuta, discrição e atenção às particularidades de cada família.
-                </p>
-
-                <p className="text-[#746c60] text-xs sm:text-sm font-light leading-relaxed">
-                  Atendimento reservado, explicações acessíveis e acompanhamento responsável ao longo do processo.
-                </p>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
-                  <div className="flex items-center gap-2 text-xs text-[#5e574c] bg-[#fffdf8] p-3 rounded-lg border border-[#80643d]/20">
-                    <CheckCircle2 className="w-4 h-4 text-[#80643d] shrink-0" />
-                    <span>Divórcio e dissolução de união</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs text-[#5e574c] bg-[#fffdf8] p-3 rounded-lg border border-[#80643d]/20">
-                    <CheckCircle2 className="w-4 h-4 text-[#80643d] shrink-0" />
-                    <span>Guarda e convivência familiar</span>
-                  </div>
-                </div>
-
-                <div className="pt-2">
-                  <GlowingButton href="#consultoria" size="sm">
-                    Falar sobre Direito de Família
-                  </GlowingButton>
+                  <p className="text-sm font-serif font-bold text-[#121316] mt-0.5">
+                    &ldquo;Cada processo é a história e a vida de uma pessoa que merece nosso respeito integral.&rdquo;
+                  </p>
                 </div>
               </div>
             </motion.div>
 
-            {/* Direito do Consumidor */}
+            {/* Right Column: Bio, Trajectory & Distinctives */}
             <motion.div
-              initial={{ opacity: 0, y: 35 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.75, ease: "easeOut" }}
-              className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center bg-[#f2ede4]/90  border border-[#80643d]/20 rounded-2xl p-6 sm:p-10 lg:p-12 shadow-xl hover:border-[#806b48]/40 transition-colors"
+              initial={{ opacity: 0, x: 35 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="lg:col-span-7 flex flex-col space-y-6 order-1 lg:order-2"
             >
-              <div className="lg:col-span-6 order-2 lg:order-1 flex flex-col space-y-5">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#eee7d9]/70 border border-[#806b48]/40 w-fit">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                  <span className="text-[11px] font-semibold tracking-[0.2em] text-[#80643d] uppercase">
-                    DIREITO DO CONSUMIDOR
-                  </span>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ffffff] border border-[#b89040]/40 shadow-sm w-fit">
+                <Sparkles className="w-3.5 h-3.5 text-[#b89040]" />
+                <span className="text-xs font-semibold tracking-[0.2em] text-[#9e782f] uppercase">
+                  SOBRE A PROFISSIONAL
+                </span>
+              </div>
+
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-[#121316] leading-[1.15]">
+                Dra. Beatriz Rozzetto
+              </h2>
+
+              <p className="text-[#3e404b] text-base sm:text-lg leading-relaxed font-normal">
+                Com escritório sediado em <strong>São João del-Rei</strong>, a Dra. Beatriz Rozzetto constrói uma advocacia baseada em princípios inegociáveis: acolhimento humano, escuta sensível e combatividade técnica intransigente.
+              </p>
+
+              <p className="text-[#555764] text-sm sm:text-base leading-relaxed font-light">
+                Diferente de escritórios impessoais onde o cliente fala apenas com atendentes ou estagiários, a Dra. Beatriz faz questão de conduzir pessoalmente as etapas estratégicas de cada processo. Você conta com explicações diretas sobre as probabilidades reais do seu caso, prazos transparentes e atualização constante de cada andamento.
+              </p>
+
+              {/* Differentials Bullet Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
+                <div className="p-3.5 rounded-xl bg-[#ffffff] border border-[#b89040]/25 shadow-xs">
+                  <h4 className="text-xs font-bold text-[#121316] uppercase tracking-wider flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#b89040]" />
+                    Atendimento sem Intermediários
+                  </h4>
+                  <p className="text-xs text-[#5e606c] mt-1">
+                    Comunicação direta com a advogada em todos os momentos decisivos.
+                  </p>
                 </div>
 
-                <h3 className="font-serif text-2xl sm:text-3xl lg:text-[32px] font-bold text-[#2b261e] leading-tight">
-                  Problemas com Bancos, Cobranças e Golpes Digitais
-                </h3>
-
-                <p className="text-[#5e574c] text-sm sm:text-base font-light leading-relaxed">
-                  Cobranças indevidas, problemas bancários, restrições no Serasa e golpes digitais podem causar prejuízos e insegurança. A Dra. Amanda analisa cada situação e orienta sobre os direitos do consumidor e as medidas cabíveis.
-                </p>
-
-                <p className="text-[#746c60] text-xs sm:text-sm font-light leading-relaxed">
-                  Atendimento próximo e sem respostas padronizadas: cada cliente recebe acompanhamento direto da Dra. Amanda Ferraz nas etapas importantes.
-                </p>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
-                  <div className="flex items-center gap-2 text-xs text-[#5e574c] bg-[#fffdf8] p-3 rounded-lg border border-[#80643d]/20">
-                    <CheckCircle2 className="w-4 h-4 text-[#80643d] shrink-0" />
-                    <span>Cobranças indevidas e dívidas</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs text-[#5e574c] bg-[#fffdf8] p-3 rounded-lg border border-[#80643d]/20">
-                    <CheckCircle2 className="w-4 h-4 text-[#80643d] shrink-0" />
-                    <span>Bancos, Serasa e golpes digitais</span>
-                  </div>
+                <div className="p-3.5 rounded-xl bg-[#ffffff] border border-[#b89040]/25 shadow-xs">
+                  <h4 className="text-xs font-bold text-[#121316] uppercase tracking-wider flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#b89040]" />
+                    Honestidade & Clareza
+                  </h4>
+                  <p className="text-xs text-[#5e606c] mt-1">
+                    Sem falsas promessas: diagnósticos realistas e estratégias embasadas.
+                  </p>
                 </div>
 
-                <div className="pt-2">
-                  <a
-                    href={whatsappDirectUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#80643d] hover:bg-[#70532d] text-white font-semibold text-xs tracking-wider uppercase transition-all shadow-md w-fit"
-                  >
-                    <Phone className="w-4 h-4" />
-                    <span>Falar sobre Direito do Consumidor</span>
-                  </a>
+                <div className="p-3.5 rounded-xl bg-[#ffffff] border border-[#b89040]/25 shadow-xs">
+                  <h4 className="text-xs font-bold text-[#121316] uppercase tracking-wider flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#b89040]" />
+                    Localização Acessível
+                  </h4>
+                  <p className="text-xs text-[#5e606c] mt-1">
+                    Sede na Av. Leite de Castro, bairro Fábricas, com fácil estacionamento.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-[#ffffff] border border-[#b89040]/25 shadow-xs">
+                  <h4 className="text-xs font-bold text-[#121316] uppercase tracking-wider flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#b89040]" />
+                    Consultoria Online & Presencial
+                  </h4>
+                  <p className="text-xs text-[#5e606c] mt-1">
+                    Atendimento na comarca de São João del-Rei e em todo o Brasil digitalmente.
+                  </p>
                 </div>
               </div>
 
-              <div className="lg:col-span-6 order-1 lg:order-2 relative w-full h-[360px] sm:h-[440px] rounded-xl overflow-hidden border border-[#80643d]/20 bg-[#eee9df] shadow-lg group">
-                <Image
-                  src="/imageye___-_imgi_9_661235566_18575283289018857_6295689630368430402_n.jpg"
-                  alt="Dra. Amanda Ferraz, advogada, em seu escritório"
-                  fill
-                  className="object-cover object-top"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  quality={75}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#f7f4ed] via-transparent to-transparent opacity-60 pointer-events-none" />
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-[#5e574c] pointer-events-none">
-                  <span className="bg-[#f7f4ed]/85  px-3 py-1 rounded-full border border-[#80643d]/20 text-[11px]">
-                    Orientação cuidadosa
-                  </span>
-                  <span className="bg-[#f7f4ed]/85  px-3 py-1 rounded-full border border-[#80643d]/20 text-[11px] text-[#80643d]">
-                    Direito do consumidor
-                  </span>
+              {/* Action Buttons */}
+              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                <GlowingButton href="#contato" size="md">
+                  Falar com a Dra. Beatriz
+                </GlowingButton>
+                <a
+                  href={CLIENT_INFO.mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-[#ffffff] hover:bg-[#f4efe4] text-[#121316] font-semibold text-xs tracking-wider uppercase border border-[#b89040]/30 hover:border-[#b89040]/60 transition-all shadow-sm"
+                >
+                  <MapPin className="w-4 h-4 text-[#b89040]" />
+                  <span>Ver Localização no Mapa</span>
+                </a>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. FOURTH FOLD: Direito do Trabalho & Orientação Prática (SINGLE IMAGE: dra-beatriz-post-trabalhista.jpg) */}
+      <section
+        id="trabalhista"
+        className="relative z-20 w-full py-20 sm:py-28 bg-[#f4f0e6] border-b border-[#b89040]/25 overflow-hidden"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            {/* Left Column: Labor Defense Copy & Practical Rights */}
+            <motion.div
+              initial={{ opacity: 0, x: -35 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="lg:col-span-7 flex flex-col space-y-6"
+            >
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ffffff] border border-[#b89040]/40 shadow-sm w-fit">
+                <Briefcase className="w-3.5 h-3.5 text-[#b89040]" />
+                <span className="text-xs font-semibold tracking-[0.2em] text-[#9e782f] uppercase">
+                  DIREITO DO TRABALHO & ORIENTAÇÃO PRÁTICA
+                </span>
+              </div>
+
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-[#121316] leading-[1.15]">
+                Combate a abusos trabalhistas e{" "}
+                <span className="text-[#b89040] italic font-normal">garantia de direitos.</span>
+              </h2>
+
+              <p className="text-[#3e404b] text-base sm:text-lg leading-relaxed font-normal">
+                Muitos trabalhadores sofrem prejuízos sem saber que a conduta do empregador é expressamente proibida pela CLT. Práticas como <strong>descontos salariais automáticos</strong> por supostos danos, retenção de comissões, horas extras não quitadas ou assédio moral geram o direito a reparações financeiras significativas.
+              </p>
+
+              {/* Practical Checklist */}
+              <div className="space-y-3 pt-1">
+                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-[#ffffff] border border-[#b89040]/25 shadow-xs">
+                  <div className="p-2 rounded-lg bg-[#faf6ed] text-[#b89040] shrink-0 mt-0.5">
+                    <CheckCircle2 className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs sm:text-sm font-bold text-[#121316] uppercase">
+                      Descontos Indevidos em Salário
+                    </h4>
+                    <p className="text-xs text-[#5e606c] mt-0.5 leading-relaxed">
+                      Danos ou quebras causadas sem dolo ou previsão expressa não podem ser descontados automaticamente da folha.
+                    </p>
+                  </div>
                 </div>
+
+                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-[#ffffff] border border-[#b89040]/25 shadow-xs">
+                  <div className="p-2 rounded-lg bg-[#faf6ed] text-[#b89040] shrink-0 mt-0.5">
+                    <CheckCircle2 className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs sm:text-sm font-bold text-[#121316] uppercase">
+                      Rescisão Indireta do Contrato de Trabalho
+                    </h4>
+                    <p className="text-xs text-[#5e606c] mt-0.5 leading-relaxed">
+                      Direito de sair do emprego recebendo todas as verbas como se demitido fosse, nos casos de falta grave patronal.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-[#ffffff] border border-[#b89040]/25 shadow-xs">
+                  <div className="p-2 rounded-lg bg-[#faf6ed] text-[#b89040] shrink-0 mt-0.5">
+                    <CheckCircle2 className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs sm:text-sm font-bold text-[#121316] uppercase">
+                      Verbas Rescisórias, Horas Extras e FGTS
+                    </h4>
+                    <p className="text-xs text-[#5e606c] mt-0.5 leading-relaxed">
+                      Cálculo minucioso das verbas corretas devidas na saída, com cobrança judicial de valores sonegados.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* CTAs */}
+              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                <a
+                  href={getWhatsAppUrl("Olá, Dra. Beatriz! Gostaria de uma análise sobre uma questão trabalhista.")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-lg bg-[#b89040] hover:bg-[#a47e33] text-[#121316] font-semibold text-xs tracking-wider uppercase transition-all shadow-[0_4px_14px_rgba(184,144,64,0.25)]"
+                >
+                  <WhatsAppIcon className="w-4 h-4 text-[#121316]" />
+                  <span>Analisar Meu Caso Trabalhista</span>
+                </a>
+                <GlowingButton href="#contato" variant="secondary" size="md">
+                  Tirar Dúvida Online
+                </GlowingButton>
               </div>
             </motion.div>
 
-            {/* Atendimento presencial e online */}
+            {/* Right Column: SINGLE IMAGE IN FOLD 4 (Post Trabalhista) */}
             <motion.div
-              initial={{ opacity: 0, y: 35 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.75, ease: "easeOut" }}
-              className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center bg-[#f2ede4]/90  border border-[#80643d]/20 rounded-2xl p-6 sm:p-10 lg:p-12 shadow-xl hover:border-[#806b48]/40 transition-colors"
+              initial={{ opacity: 0, x: 35, scale: 0.96 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.85, ease: "easeOut" }}
+              className="lg:col-span-5 relative flex justify-center lg:justify-end"
             >
-              <div className="lg:col-span-6 relative w-full h-[380px] sm:h-[480px] rounded-xl overflow-hidden border border-[#80643d]/20 bg-[#eee9df] shadow-lg group">
-                <Image
-                  src="/imageye___-_imgi_10_656865887_18572500648018857_7151245361150465561_n.jpg"
-                  alt="Dra. Amanda Ferraz, advogada, em seu escritório"
-                  fill
-                  className="object-cover object-top"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  quality={75}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#f7f4ed]/80 via-transparent to-transparent pointer-events-none" />
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-[#5e574c] pointer-events-none">
-                  <span className="bg-[#f7f4ed]/85  px-3 py-1 rounded-full border border-[#80643d]/20 text-[11px]">
-                    Áreas de Atuação
-                  </span>
-                  <span className="bg-[#f7f4ed]/85  px-3 py-1 rounded-full border border-[#80643d]/20 text-[11px] text-[#80643d]">
-                    Atendimento presencial e online
-                  </span>
+              <div className="relative w-full max-w-[400px] rounded-2xl overflow-hidden border border-[#b89040]/40 bg-[#ffffff] shadow-2xl p-3">
+                <div className="relative h-[480px] sm:h-[540px] w-full rounded-xl overflow-hidden">
+                  <Image
+                    src="/dra-beatriz-post-trabalhista.jpg"
+                    alt="Publicação informativa da Dra. Beatriz Rozzetto: Descontos no salário por danos causados pelo empregado não podem ser feitos de forma automática"
+                    fill
+                    className="object-contain bg-[#f9f8f6]"
+                    sizes="(max-width: 1024px) 100vw, 400px"
+                    quality={90}
+                  />
                 </div>
-              </div>
-
-              <div className="lg:col-span-6 flex flex-col space-y-5">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#eee7d9]/70 border border-[#806b48]/40 w-fit">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                  <span className="text-[11px] font-semibold tracking-[0.2em] text-[#80643d] uppercase">
-                    ATUAÇÃO EM BELO HORIZONTE E ONLINE
-                  </span>
-                </div>
-
-                <h3 className="font-serif text-2xl sm:text-3xl lg:text-[32px] font-bold text-[#2b261e] leading-tight">
-                  Orientação Jurídica em Família e Consumo
-                </h3>
-
-                <p className="text-[#5e574c] text-sm sm:text-base font-light leading-relaxed">
-                  Atendimento jurídico em <strong>Direito de Família</strong> e <strong>Direito do Consumidor</strong>, com atenção às necessidades de cada pessoa e orientação clara sobre seus direitos.
-                </p>
-
-                <p className="text-[#746c60] text-xs sm:text-sm font-light leading-relaxed">
-                  Atendimento presencial em Belo Horizonte e online para clientes de outras localidades, conforme as necessidades de cada caso.
-                </p>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
-                  <div className="flex items-center gap-2 text-xs text-[#5e574c] bg-[#fffdf8] p-3 rounded-lg border border-[#80643d]/20">
-                    <CheckCircle2 className="w-4 h-4 text-[#80643d] shrink-0" />
-                    <span>Direito de Família</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs text-[#5e574c] bg-[#fffdf8] p-3 rounded-lg border border-[#80643d]/20">
-                    <CheckCircle2 className="w-4 h-4 text-[#80643d] shrink-0" />
-                    <span>Direito do Consumidor</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs text-[#5e574c] bg-[#fffdf8] p-3 rounded-lg border border-[#80643d]/20">
-                    <CheckCircle2 className="w-4 h-4 text-[#80643d] shrink-0" />
-                    <span>Divórcio, guarda e pensão</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs text-[#5e574c] bg-[#fffdf8] p-3 rounded-lg border border-[#80643d]/20">
-                    <CheckCircle2 className="w-4 h-4 text-[#80643d] shrink-0" />
-                    <span>Questões bancárias e cobranças</span>
-                  </div>
-                </div>
-
-                <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                  <a
-                    href={whatsappDirectUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#80643d] hover:bg-[#70532d] text-white font-semibold text-xs tracking-wider uppercase transition-all shadow-md"
-                  >
-                    <Phone className="w-4 h-4" />
-                    <span>Falar com a Dra. Amanda</span>
-                  </a>
-                  <button
-                    onClick={() => setActiveModal("areas")}
-                    className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-[#fffdf8] hover:bg-[#e9e0d1] text-[#5e574c] hover:text-[#2b261e] font-semibold text-xs tracking-wider uppercase border border-[#80643d]/20 hover:border-[#806b48]/40 transition-all cursor-pointer"
-                  >
-                    <span>Ver Todas as Áreas</span>
-                    <ChevronRight className="w-4 h-4 text-[#80643d]" />
-                  </button>
-                  <a
-                    href="https://www.instagram.com/advamandaferraz/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-[#fffdf8] hover:bg-[#e9e0d1] text-[#5e574c] hover:text-[#2b261e] font-semibold text-xs tracking-wider uppercase border border-[#80643d]/20 hover:border-[#80643d]/35 transition-all"
-                  >
-                    <InstagramIcon className="w-4 h-4 text-[#80643d]" />
-                    <span>@advamandaferraz</span>
-                  </a>
+                <div className="mt-3 px-3 py-2 flex items-center justify-between text-xs text-[#5a5c68]">
+                  <span className="font-semibold text-[#121316]">Informação Jurídica & Direitos</span>
+                  <span className="text-[#b89040] font-medium">Dra. Beatriz Rozzetto</span>
                 </div>
               </div>
             </motion.div>
@@ -1158,35 +1022,33 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 8. NOVA DOBRA: Avaliações Reais de Clientes (Reviews) */}
+      {/* 7. FIFTH FOLD: Avaliações Reais no Google Maps (100% NO PHOTOS - Strict Compliance) */}
       <section
         id="avaliacoes"
-        className="relative z-20 w-full py-20 sm:py-28 bg-[#100d09] text-[#f7f1e6] border-b border-white/10 overflow-hidden"
+        className="relative z-20 w-full py-20 sm:py-28 bg-[#121316] text-[#faf6ed] overflow-hidden"
       >
-        {/* Ambient Focal Light */}
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header & Google Rating Badge */}
-          <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-18 flex flex-col items-center">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#19140e] border border-[#a78c5d]/35 mb-4 shadow-sm">
-              <Star className="w-3.5 h-3.5 text-[#80643d] fill-amber-400" />
-              <span className="text-xs font-semibold tracking-[0.22em] text-[#c5b28d] uppercase">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header & Trust Metric */}
+          <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 flex flex-col items-center">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1a1b21] border border-[#b89040]/40 mb-4 shadow-sm">
+              <Star className="w-3.5 h-3.5 text-[#b89040] fill-[#b89040]" />
+              <span className="text-xs font-semibold tracking-[0.22em] text-[#d8b979] uppercase">
                 AVALIAÇÕES & PROVA SOCIAL
               </span>
             </div>
 
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-[#f7f1e6] leading-[1.15] mb-4">
-              O que os clientes contam
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-[#faf6ed] leading-[1.15] mb-4">
+              O que dizem os clientes atendidos
             </h2>
 
-            <p className="text-[#d3cabb] text-base sm:text-lg font-light leading-relaxed mb-6">
-              Relatos de clientes sobre o atendimento da Dra. Amanda Ferraz em Belo Horizonte.
+            <p className="text-[#c7bba8] text-base sm:text-lg font-light leading-relaxed mb-6">
+              Relatos reais e públicos de pessoas atendidas pela <strong>Dra. Beatriz Rozzetto</strong> em São João del-Rei e comarca.
             </p>
 
-            {/* Google Reviews Trust Badge */}
-            <div className="inline-flex flex-col sm:flex-row items-center gap-4 px-6 py-3.5 rounded-2xl bg-[#211a11] border border-white/10 shadow-lg">
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5" viewBox="0 0 24 24">
+            {/* Google Reviews Trust Badge Card */}
+            <div className="inline-flex flex-col sm:flex-row items-center gap-4 sm:gap-6 px-7 py-4 rounded-2xl bg-[#1a1b21] border border-[#b89040]/30 shadow-xl">
+              <div className="flex items-center gap-2.5">
+                <svg className="w-6 h-6" viewBox="0 0 24 24">
                   <path
                     fill="#4285F4"
                     d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"
@@ -1204,66 +1066,101 @@ export default function Home() {
                     d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"
                   />
                 </svg>
-                <span className="text-sm font-semibold text-[#f7f1e6]">Avaliações no Google</span>
+                <div className="flex flex-col text-left">
+                  <span className="text-xs text-[#a99e8d] uppercase tracking-wider font-semibold">Avaliações no Google</span>
+                  <span className="text-sm font-bold text-[#faf6ed]">Dra. Beatriz Rozzetto</span>
+                </div>
               </div>
-              <div className="flex items-center gap-1.5">
-                <span className="text-sm font-bold text-[#f7f1e6]">5,0</span>
+
+              <div className="h-8 w-px bg-white/10 hidden sm:block" />
+
+              <div className="flex items-center gap-2">
+                <span className="text-2xl font-bold text-[#faf6ed]">5,0</span>
                 <div className="flex gap-0.5">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 text-[#c5b28d] fill-amber-400" />
+                    <Star key={i} className="w-5 h-5 text-[#b89040] fill-[#b89040]" />
                   ))}
                 </div>
-                <span className="text-xs text-[#c0b8aa] ml-1">(162 avaliações)</span>
+                <span className="text-xs text-[#d8b979] font-medium ml-1">
+                  (17 avaliações reais)
+                </span>
               </div>
+            </div>
+
+            {/* Filter Pills */}
+            <div className="flex flex-wrap items-center justify-center gap-2 pt-6">
+              {[
+                { id: "todos", label: "Todas (12 em destaque)" },
+                { id: "competencia", label: "Competência & Resolução" },
+                { id: "atenciosa", label: "Atenciosa & Prestativa" },
+                { id: "pontualidade", label: "Pontualidade & Transparência" },
+                { id: "preco_justo", label: "Preço Justo" },
+              ].map((filter) => (
+                <button
+                  key={filter.id}
+                  onClick={() => setReviewFilter(filter.id)}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-medium tracking-wide uppercase transition-all cursor-pointer ${
+                    reviewFilter === filter.id
+                      ? "bg-[#b89040] text-[#121316] font-semibold shadow-sm"
+                      : "bg-[#181920] text-[#c7bba8] hover:text-[#faf6ed] border border-white/10"
+                  }`}
+                >
+                  {filter.label}
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* Reviews Grid (7 Cards) */}
+          {/* Reviews Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {REVIEWS.map((review, idx) => (
+            {filteredReviews.map((review, idx) => (
               <motion.div
                 key={review.author}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 25 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.6, delay: idx * 0.1, ease: "easeOut" }}
-                className="group relative flex flex-col justify-between p-6 sm:p-7 rounded-2xl bg-[#19140e]/95 hover:bg-[#211a11] border border-white/10 hover:border-[#a78c5d]/40 shadow-[0_8px_24px_rgba(0,0,0,0.28)] transition-all duration-300"
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.5, delay: (idx % 6) * 0.08, ease: "easeOut" }}
+                className="group relative flex flex-col justify-between p-6 sm:p-7 rounded-2xl bg-[#181920] hover:bg-[#202129] border border-[#b89040]/20 hover:border-[#b89040]/50 shadow-lg transition-all duration-300"
               >
                 <div>
-                  {/* Top: Stars & Quote Icon */}
                   <div className="flex items-center justify-between mb-4">
-                    <div className="flex gap-1">
+                    <div className="flex gap-1 text-[#b89040]">
                       {[...Array(review.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 text-[#c5b28d] fill-amber-400" />
+                        <Star key={i} className="w-4 h-4 fill-[#b89040]" />
                       ))}
                     </div>
-                    <Quote className="w-5 h-5 text-[#a99b82] group-hover:text-[#c5b28d] transition-colors" />
+                    <Quote className="w-5 h-5 text-[#6c5934] group-hover:text-[#b89040] transition-colors" />
                   </div>
 
-                  {/* Review Quote Text */}
-                  <p className="text-[#d3cabb] text-xs sm:text-[13px] font-light leading-relaxed italic">
+                  <p className="text-[#dcd3c4] text-xs sm:text-[13px] font-light leading-relaxed italic">
                     &ldquo;{review.text}&rdquo;
                   </p>
                 </div>
 
-                {/* Bottom: Author Info & Tag */}
                 <div className="pt-5 mt-5 border-t border-white/10 flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#e8ddc8] to-[#d1bf9e] border border-[#806b48]/40 flex items-center justify-center text-xs font-bold text-[#6f5934] shadow-sm">
+                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#b89040] to-[#7e5e22] text-[#121316] font-bold text-xs flex items-center justify-center shadow-xs">
                       {review.author
                         .split(" ")
                         .map((n) => n[0])
+                        .slice(0, 2)
                         .join("")}
                     </div>
                     <div>
-                      <h4 className="text-xs font-bold text-[#f7f1e6] group-hover:text-[#c5b28d] transition-colors">
+                      <h4 className="text-xs font-bold text-[#faf6ed] group-hover:text-[#d8b979] transition-colors">
                         {review.author}
                       </h4>
-                      <span className="text-[11px] text-[#c0b8aa] font-light block">{review.time}</span>
+                      {review.subtitle ? (
+                        <span className="text-[10px] text-[#b89040] font-medium block">
+                          {review.subtitle}
+                        </span>
+                      ) : (
+                        <span className="text-[10px] text-[#938c7f] block">{review.time}</span>
+                      )}
                     </div>
                   </div>
 
-                  <span className="text-[10px] font-medium text-[#c5b28d] bg-[#312818]/70 border border-[#a78c5d]/30 px-2 py-0.5 rounded-md">
+                  <span className="text-[10px] font-medium text-[#d8b979] bg-[#272832] border border-[#b89040]/30 px-2.5 py-1 rounded-md">
                     {review.tag}
                   </span>
                 </div>
@@ -1271,253 +1168,416 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Callout below reviews */}
+          {/* Social Proof Callout */}
           <div className="mt-12 text-center">
             <a
-              href={whatsappDirectUrl}
+              href={getWhatsAppUrl("Olá, Dra. Beatriz! Vi os depoimentos dos seus clientes e gostaria de conversar sobre o meu caso.")}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-xs sm:text-sm text-[#c5b28d] hover:text-[#f7f1e6] font-medium transition-colors"
+              className="inline-flex items-center gap-2 text-xs sm:text-sm text-[#d8b979] hover:text-[#faf6ed] font-medium transition-colors cursor-pointer"
             >
-              <span>Precisa de orientação jurídica? Fale com a Dra. Amanda.</span>
-              <ArrowRight className="w-4 h-4" />
+              <span>Deseja atendimento com o mesmo padrão de excelência? Fale com a Dra. Beatriz.</span>
+              <ArrowRight className="w-4 h-4 text-[#b89040]" />
             </a>
           </div>
         </div>
       </section>
 
-      {/* 9. Minimal Footer */}
-      <footer className="relative z-20 w-full border-t border-white/10 bg-[#090704] text-[#f7f1e6] py-10 ">
+      {/* 8. SIXTH FOLD: Sede, Agendamento & Contato Direto */}
+      <section
+        id="contato"
+        className="relative z-20 w-full py-20 sm:py-28 bg-[#faf8f5] border-b border-[#b89040]/25 overflow-hidden"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            {/* Col 1: Brand */}
-            <div className="md:col-span-2 space-y-4">
-              <div className="flex items-center gap-3">
-                <Image
-                  src="/logo.png"
-                  width={200}
-                  height={200}
-                  alt="Dra. Amanda Ferraz — Advogada"
-                  className="h-16 sm:h-[4.5rem] w-auto object-contain"
-                />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+            {/* Left: Office Information, Location Card & Map */}
+            <motion.div
+              initial={{ opacity: 0, x: -35 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="lg:col-span-6 flex flex-col space-y-6"
+            >
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ffffff] border border-[#b89040]/40 shadow-sm w-fit">
+                <MapPin className="w-3.5 h-3.5 text-[#b89040]" />
+                <span className="text-xs font-semibold tracking-[0.2em] text-[#9e782f] uppercase">
+                  SEDE & ATENDIMENTO
+                </span>
               </div>
-              <p className="text-xs text-[#c0b8aa] max-w-sm leading-relaxed font-light">
-                Atendimento humanizado em Direito de Família e do Consumidor, em Belo Horizonte e online.
+
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-[#121316] leading-[1.15]">
+                Entre em contato e agende sua consulta.
+              </h2>
+
+              <p className="text-[#454752] text-base leading-relaxed font-normal">
+                Atendemos presencialmente em nosso escritório em São João del-Rei, com infraestrutura reservada para garantir seu total conforto e sigilo. Para clientes de outras cidades ou com rotina dinâmica, realizamos consultas estratégicas por videoconferência com a mesma profundidade.
               </p>
-              <div className="flex items-center gap-3 pt-1">
+
+              {/* Contact Channels */}
+              <div className="space-y-4 pt-2">
+                <div className="p-4 rounded-xl bg-[#ffffff] border border-[#b89040]/25 shadow-xs flex items-start gap-3.5">
+                  <div className="p-2.5 rounded-lg bg-[#faf6ed] text-[#b89040] shrink-0">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-[#121316] uppercase tracking-wider">Endereço Oficial</h4>
+                    <p className="text-xs sm:text-sm text-[#3b3c45] mt-1 font-medium">
+                      Av. Leite de Castro, 125 - Fábricas
+                    </p>
+                    <p className="text-xs text-[#6e707e]">São João del Rei - MG, CEP 36301-180</p>
+                    <a
+                      href={CLIENT_INFO.mapsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs text-[#b89040] hover:text-[#9e782f] font-semibold mt-2"
+                    >
+                      <span>Abrir no Google Maps</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-xl bg-[#ffffff] border border-[#b89040]/25 shadow-xs flex items-start gap-3.5">
+                  <div className="p-2.5 rounded-lg bg-[#faf6ed] text-[#b89040] shrink-0">
+                    <Phone className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-[#121316] uppercase tracking-wider">WhatsApp & Telefone</h4>
+                    <p className="text-xs sm:text-sm text-[#3b3c45] mt-1 font-medium">
+                      Atendimento direto e agendamento prévio
+                    </p>
+                    <a
+                      href={getWhatsAppUrl()}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs text-emerald-700 hover:text-emerald-800 font-semibold mt-2"
+                    >
+                      <WhatsAppIcon className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>Iniciar conversa no WhatsApp</span>
+                    </a>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-xl bg-[#ffffff] border border-[#b89040]/25 shadow-xs flex items-start gap-3.5">
+                  <div className="p-2.5 rounded-lg bg-[#faf6ed] text-[#b89040] shrink-0">
+                    <Lock className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-[#121316] uppercase tracking-wider">Sigilo & Privacidade</h4>
+                    <p className="text-xs text-[#5e606c] mt-1 leading-relaxed">
+                      Todas as informações e documentos enviados são estritamente confidenciais e protegidos pelo Estatuto da Advocacia e OAB.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Right: Direct Consultation Request Form */}
+            <motion.div
+              initial={{ opacity: 0, x: 35 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="lg:col-span-6 relative w-full"
+            >
+              <div className="relative rounded-2xl bg-[#ffffff] border border-[#b89040]/35 p-6 sm:p-8 lg:p-10 shadow-xl">
+                <div className="mb-6">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="inline-block px-3 py-1 rounded-full bg-[#faf6ed] border border-[#b89040]/30 text-[10px] font-semibold tracking-[0.2em] text-[#9e782f] uppercase">
+                      DIAGNÓSTICO INICIAL
+                    </span>
+                    <span className="text-[11px] text-[#6e707e] font-medium">Resposta Ágil</span>
+                  </div>
+                  <h3 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#121316]">
+                    Solicitar Análise do Caso
+                  </h3>
+                  <p className="text-[#555764] text-xs sm:text-sm mt-1.5 leading-relaxed font-light">
+                    Preencha os dados abaixo. Sua mensagem será direcionada diretamente para o WhatsApp do escritório.
+                  </p>
+                </div>
+
+                {formSubmitted ? (
+                  <div className="py-12 text-center space-y-3 bg-[#faf6ed] border border-[#b89040]/40 rounded-xl p-6 animate-in fade-in duration-300">
+                    <div className="w-14 h-14 rounded-full bg-[#b89040]/20 border border-[#b89040]/50 flex items-center justify-center mx-auto text-[#b89040]">
+                      <CheckCircle2 className="w-8 h-8" />
+                    </div>
+                    <h4 className="font-serif text-lg font-bold text-[#121316]">Solicitação Enviada!</h4>
+                    <p className="text-xs text-[#555764] leading-relaxed max-w-xs mx-auto">
+                      Redirecionando para o WhatsApp da Dra. Beatriz Rozzetto...
+                    </p>
+                  </div>
+                ) : (
+                  <form onSubmit={handleFormSubmit} className="space-y-4">
+                    <div>
+                      <label htmlFor="form-nome" className="block text-xs font-semibold uppercase tracking-wider text-[#353640] mb-1.5">
+                        Nome Completo
+                      </label>
+                      <input
+                        id="form-nome"
+                        type="text"
+                        required
+                        placeholder="Ex: João da Silva"
+                        value={formData.nome}
+                        onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
+                        className="w-full px-4 py-3 rounded-lg bg-[#faf8f5] border border-[#b89040]/25 text-[#121316] placeholder-[#8a8c98] text-sm focus:outline-none focus:border-[#b89040] focus:ring-1 focus:ring-[#b89040] transition-all"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="form-tel" className="block text-xs font-semibold uppercase tracking-wider text-[#353640] mb-1.5">
+                        WhatsApp ou Telefone com DDD
+                      </label>
+                      <input
+                        id="form-tel"
+                        type="tel"
+                        required
+                        placeholder="(32) 99999-9999"
+                        value={formData.telefone}
+                        onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
+                        className="w-full px-4 py-3 rounded-lg bg-[#faf8f5] border border-[#b89040]/25 text-[#121316] placeholder-[#8a8c98] text-sm focus:outline-none focus:border-[#b89040] focus:ring-1 focus:ring-[#b89040] transition-all"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="form-area" className="block text-xs font-semibold uppercase tracking-wider text-[#353640] mb-1.5">
+                        Área de Interesse
+                      </label>
+                      <select
+                        id="form-area"
+                        value={formData.area}
+                        onChange={(e) => setFormData({ ...formData, area: e.target.value })}
+                        className="w-full px-4 py-3 rounded-lg bg-[#faf8f5] border border-[#b89040]/25 text-[#121316] text-sm focus:outline-none focus:border-[#b89040] focus:ring-1 focus:ring-[#b89040] transition-all"
+                      >
+                        <option value="Direito Civil / Contratos">Direito Civil & Contratos</option>
+                        <option value="Direito do Trabalho / Rescisão">Direito do Trabalho & Rescisão</option>
+                        <option value="Direito de Família / Divórcio / Guarda">Direito de Família (Divórcio, Guarda, Pensão)</option>
+                        <option value="Sucessões / Inventário">Inventário & Partilha de Bens</option>
+                        <option value="Direito do Consumidor">Direito do Consumidor & Golpes Bancários</option>
+                        <option value="Outra Questão Jurídica">Outra Questão Jurídica</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label htmlFor="form-desc" className="block text-xs font-semibold uppercase tracking-wider text-[#353640] mb-1.5">
+                        Breve Resumo da Situação
+                      </label>
+                      <textarea
+                        id="form-desc"
+                        rows={3}
+                        placeholder="Descreva brevemente o que aconteceu ou a sua dúvida..."
+                        value={formData.descricao}
+                        onChange={(e) => setFormData({ ...formData, descricao: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-lg bg-[#faf8f5] border border-[#b89040]/25 text-[#121316] placeholder-[#8a8c98] text-sm focus:outline-none focus:border-[#b89040] focus:ring-1 focus:ring-[#b89040] transition-all resize-none"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full py-4 rounded-lg bg-[#b89040] hover:bg-[#a47e33] text-[#121316] font-bold text-xs tracking-[0.16em] uppercase transition-all duration-200 border border-[#d8b979]/70 cursor-pointer flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(184,144,64,0.25)] hover:shadow-[0_6px_20px_rgba(184,144,64,0.35)]"
+                    >
+                      <WhatsAppIcon className="w-4 h-4 text-[#121316]" />
+                      <span>ENVIAR SOLICITAÇÃO VIA WHATSAPP</span>
+                    </button>
+
+                    <div className="pt-2 flex items-center justify-center gap-2 text-[11px] text-[#6e707e]">
+                      <Shield className="w-3.5 h-3.5 text-[#b89040]" />
+                      <span>Atendimento estritamente sigiloso e resguardado pela OAB</span>
+                    </div>
+                  </form>
+                )}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* 9. Minimal Editorial Footer */}
+      <footer className="relative z-20 w-full border-t border-white/10 bg-[#0d0e11] text-[#faf6ed] py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
+            {/* Col 1 & 2: Brand & Positioning */}
+            <div className="md:col-span-2 space-y-4">
+              <div className="flex items-center gap-3.5">
+                <Image
+                  src="/logo-white.png"
+                  width={140}
+                  height={140}
+                  alt="Dra. Beatriz Rozzetto Advocacia"
+                  className="h-16 w-auto object-contain"
+                />
+                <div className="flex flex-col">
+                  <span className="font-serif text-xl font-bold text-[#faf6ed]">
+                    Dra. Beatriz Rozzetto
+                  </span>
+                  <span className="text-[11px] text-[#b89040] tracking-widest uppercase font-medium">
+                    Advocacia Estratégica & Consultoria
+                  </span>
+                </div>
+              </div>
+              <p className="text-xs text-[#a99e8d] max-w-md leading-relaxed font-light">
+                Atuação artesanal em Direito Civil, Trabalhista, Família e Consumidor. Sede no bairro Fábricas em São João del-Rei - MG, com atendimento dedicado a clientes de todo o país.
+              </p>
+              <div className="flex items-center gap-3 pt-2">
                 <a
-                  href="https://www.instagram.com/advamandaferraz/"
+                  href={getWhatsAppUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-lg bg-[#19140e] border border-white/10 hover:border-[#a78c5d]/40 flex items-center justify-center text-[#c0b8aa] hover:text-[#c5b28d] transition-colors"
-                  aria-label="Instagram @advamandaferraz"
+                  className="w-9 h-9 rounded-lg bg-[#181920] border border-white/10 hover:border-[#b89040]/50 flex items-center justify-center text-[#c7bba8] hover:text-emerald-400 transition-colors"
+                  aria-label="WhatsApp"
+                  title="Falar no WhatsApp"
                 >
-                  <InstagramIcon className="w-4 h-4" />
+                  <WhatsAppIcon className="w-4 h-4 text-emerald-500" />
                 </a>
                 <a
-                  href={whatsappDirectUrl}
+                  href={CLIENT_INFO.mapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-lg bg-[#19140e] border border-white/10 hover:border-[#a78c5d]/40 flex items-center justify-center text-[#c0b8aa] hover:text-green-400 transition-colors"
-                  aria-label="WhatsApp"
+                  className="w-9 h-9 rounded-lg bg-[#181920] border border-white/10 hover:border-[#b89040]/50 flex items-center justify-center text-[#c7bba8] hover:text-[#d8b979] transition-colors"
+                  aria-label="Localização no Google Maps"
+                  title="Google Maps"
                 >
-                  <Phone className="w-4 h-4" />
+                  <MapPin className="w-4 h-4 text-[#b89040]" />
                 </a>
               </div>
             </div>
 
-            {/* Col 2: Contato Oficial */}
-            <div className="space-y-3 text-xs text-[#c0b8aa]">
-              <h4 className="font-bold text-[#f7f1e6] uppercase tracking-wider text-xs">Atendimento</h4>
+            {/* Col 3: Sede em São João del-Rei */}
+            <div className="space-y-3 text-xs text-[#a99e8d]">
+              <h4 className="font-bold text-[#faf6ed] uppercase tracking-wider text-xs border-b border-[#b89040]/30 pb-1.5 w-fit">
+                Sede do Escritório
+              </h4>
               <div className="flex items-start gap-2 pt-1">
-                <MapPin className="w-4 h-4 text-[#80643d] shrink-0 mt-0.5" />
-                <span>R. Domingos Vieira, 587 - Santa Efigênia, Belo Horizonte - MG, 30150-240</span>
+                <MapPin className="w-4 h-4 text-[#b89040] shrink-0 mt-0.5" />
+                <span>Av. Leite de Castro, 125 - Fábricas, São João del Rei - MG, 36301-180</span>
               </div>
               <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-[#80643d] shrink-0" />
-                <a href="tel:+5531975412091" className="hover:text-[#f7f1e6] transition-colors">
-                  (31) 97541-2091
-                </a>
+                <Phone className="w-4 h-4 text-[#b89040] shrink-0" />
+                <span>Atendimento Presencial e Online</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Shield className="w-4 h-4 text-[#b89040] shrink-0" />
+                <span>Inscrita na OAB/MG</span>
               </div>
             </div>
 
-            {/* Col 3: Navegação Rápida */}
-            <div className="space-y-2.5 text-xs text-[#c0b8aa]">
-              <h4 className="font-bold text-[#f7f1e6] uppercase tracking-wider text-xs">Navegação</h4>
+            {/* Col 4: Links Rápidos */}
+            <div className="space-y-2.5 text-xs text-[#a99e8d]">
+              <h4 className="font-bold text-[#faf6ed] uppercase tracking-wider text-xs border-b border-[#b89040]/30 pb-1.5 w-fit">
+                Navegação
+              </h4>
               <div>
-                <a href="#inicio" className="hover:text-[#f7f1e6] transition-colors">Início</a>
+                <a href="#inicio" className="hover:text-[#faf6ed] transition-colors">Início</a>
               </div>
               <div>
-                <a href="#filosofia" className="hover:text-[#f7f1e6] transition-colors">Atendimento</a>
+                <a href="#atendimento" className="hover:text-[#faf6ed] transition-colors">Atendimento Cível</a>
               </div>
               <div>
-                <a href="#conduta" className="hover:text-[#f7f1e6] transition-colors">Compromisso</a>
+                <a href="#advogada" className="hover:text-[#faf6ed] transition-colors">A Advogada</a>
               </div>
               <div>
-                <a href="#advogado" className="hover:text-[#f7f1e6] transition-colors">Áreas de atuação</a>
+                <a href="#trabalhista" className="hover:text-[#faf6ed] transition-colors">Direito do Trabalho</a>
               </div>
               <div>
-                <a href="#avaliacoes" className="hover:text-[#f7f1e6] transition-colors">Avaliações (5,0 ★)</a>
+                <a href="#avaliacoes" className="hover:text-[#faf6ed] transition-colors">Avaliações (5,0 ★)</a>
               </div>
               <div>
-                <button onClick={() => setActiveModal("areas")} className="hover:text-[#f7f1e6] transition-colors cursor-pointer">
+                <button
+                  onClick={() => setActiveModal("areas")}
+                  className="hover:text-[#faf6ed] transition-colors cursor-pointer text-left"
+                >
                   Áreas de Atuação
                 </button>
               </div>
             </div>
           </div>
 
-          <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-[#b6ad9d] gap-4">
+          <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-[#908879] gap-4">
             <span>
-              © {new Date().getFullYear()} Dra. Amanda Ferraz — Advogada. Todos os direitos reservados.
+              © {new Date().getFullYear()} Dra. Beatriz Rozzetto — Advogada. Todos os direitos reservados.
             </span>
             <div className="flex items-center gap-4">
-              <span>Atendimento jurídico com ética e sigilo</span>
+              <span>Ética e Sigilo Profissional OAB/MG</span>
               <span>•</span>
-              <button onClick={() => setActiveModal("contato")} className="hover:text-[#f7f1e6] transition-colors cursor-pointer">
+              <a
+                href={getWhatsAppUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#faf6ed] transition-colors"
+              >
                 Fale Conosco
-              </button>
+              </a>
             </div>
           </div>
         </div>
       </footer>
 
-      {/* 10. Interactive Modals */}
+      {/* 10. Modais Interativos */}
       {activeModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80  animate-in fade-in duration-200">
-          <div className="relative w-full max-w-2xl bg-[#f2ede4] border border-[#806b48]/40 rounded-2xl p-6 sm:p-8 shadow-xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="relative w-full max-w-2xl bg-[#faf8f5] border border-[#b89040]/40 rounded-2xl p-6 sm:p-8 shadow-2xl">
             <button
               onClick={() => setActiveModal(null)}
-              className="absolute top-4 right-4 p-2 text-[#746c60] hover:text-[#2b261e] rounded-lg border border-[#80643d]/20 hover:border-[#80643d]/35 cursor-pointer"
+              className="absolute top-4 right-4 p-2 text-[#555660] hover:text-[#121316] rounded-lg border border-[#b89040]/30 hover:border-[#b89040]/60 cursor-pointer"
+              aria-label="Fechar"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
 
-            {activeModal === "sobre" && (
-              <div className="space-y-4">
-                <div className="flex items-center gap-3.5 mb-2">
-                  <Image
-                    src="/logo.png"
-                    width={80}
-                    height={80}
-                    alt="Símbolo da balança dourada da Dra. Amanda Ferraz"
-                    className="h-10 w-auto object-contain"
-                  />
-                </div>
-                <h3 className="font-serif text-2xl font-bold text-[#2b261e]">Dra. Amanda Ferraz — Advogada</h3>
-                <p className="text-sm text-[#5e574c] leading-relaxed font-light">
-                  Com sede em Belo Horizonte, Dra. Amanda Ferraz oferece orientação jurídica em Direito de Família e Direito do Consumidor, com atendimento presencial e online.
-                </p>
-                <p className="text-sm text-[#5e574c] leading-relaxed font-light">
-                  Cada atendimento começa pela escuta. A atuação é conduzida com clareza, discrição e atenção às necessidades de cada pessoa.
-                </p>
-                <div className="pt-4 border-t border-[#80643d]/20 flex justify-end">
-                  <button
-                    onClick={() => setActiveModal(null)}
-                    className="px-5 py-2.5 bg-[#80643d] text-white text-xs font-semibold tracking-wider uppercase rounded-xl hover:bg-[#70532d] cursor-pointer"
-                  >
-                    Fechar
-                  </button>
-                </div>
-              </div>
-            )}
-
             {activeModal === "areas" && (
               <div className="space-y-4">
-                <span className="text-[10px] font-bold tracking-[0.25em] text-[#80643d] uppercase">
+                <span className="text-[10px] font-bold tracking-[0.25em] text-[#b89040] uppercase">
                   ESPECIALIDADES JURÍDICAS
                 </span>
-                <h3 className="font-serif text-2xl font-bold text-[#2b261e]">Áreas de Atuação</h3>
+                <h3 className="font-serif text-2xl font-bold text-[#121316]">
+                  Áreas de Atuação — Dra. Beatriz Rozzetto
+                </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                   {[
                     {
-                      title: "Direito de Família",
-                      desc: "Divórcio, pensão alimentícia, guarda e convivência familiar.",
+                      title: "Direito Civil & Contratos",
+                      desc: "Elaboração e revisão de contratos, renegociação de dívidas, obrigações e disputas patrimoniais.",
+                    },
+                    {
+                      title: "Direito do Trabalho",
+                      desc: "Defesa contra descontos indevidos no salário, rescisão indireta, horas extras e verbas rescisórias.",
+                    },
+                    {
+                      title: "Família & Sucessões",
+                      desc: "Divórcio consensual e litigioso, partilha de bens, pensão alimentícia, guarda e inventários.",
+                    },
+                    {
+                      title: "Responsabilidade Civil & Indenizações",
+                      desc: "Reparação por danos morais, materiais, prejuízos decorrentes de acidentes e cobranças indevidas.",
                     },
                     {
                       title: "Direito do Consumidor",
-                      desc: "Cobranças indevidas, problemas bancários, Serasa e golpes digitais.",
+                      desc: "Inscrições indevidas em SPC/Serasa, abusos de planos de saúde, bancos e fraudes financeiras.",
                     },
                     {
-                      title: "Divórcio e união estável",
-                      desc: "Orientação jurídica para decisões e acordos em momentos de mudança familiar.",
-                    },
-                    {
-                      title: "Pensão alimentícia",
-                      desc: "Orientação sobre fixação, revisão e cumprimento da pensão.",
-                    },
-                    {
-                      title: "Guarda e convivência",
-                      desc: "Acompanhamento jurídico de questões relacionadas à guarda dos filhos.",
-                    },
-                    {
-                      title: "Questões bancárias e digitais",
-                      desc: "Análise de cobranças, fraudes e problemas com serviços financeiros.",
+                      title: "Consultoria Preventiva",
+                      desc: "Assessoria estratégica para evitar litígios judiciais caros e garantir conformidade jurídica.",
                     },
                   ].map((area, idx) => (
-                    <div key={idx} className="p-3 bg-[#fffdf8] border border-[#80643d]/20 rounded-xl">
-                      <h4 className="text-xs font-bold text-[#2b261e] uppercase">{area.title}</h4>
-                      <p className="text-[11px] text-[#746c60] mt-0.5 leading-relaxed">{area.desc}</p>
+                    <div key={idx} className="p-3.5 bg-[#ffffff] border border-[#b89040]/25 rounded-xl shadow-xs">
+                      <h4 className="text-xs font-bold text-[#121316] uppercase">{area.title}</h4>
+                      <p className="text-[11px] text-[#555764] mt-1 leading-relaxed">{area.desc}</p>
                     </div>
                   ))}
                 </div>
-                <div className="pt-4 border-t border-[#80643d]/20 flex justify-end">
-                  <button
-                    onClick={() => setActiveModal(null)}
-                    className="px-5 py-2.5 bg-[#80643d] text-white text-xs font-semibold tracking-wider uppercase rounded-xl hover:bg-[#70532d] cursor-pointer"
-                  >
-                    Entendido
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {activeModal === "contato" && (
-              <div className="space-y-4">
-                <span className="text-[10px] font-bold tracking-[0.25em] text-[#80643d] uppercase">
-                  CANAIS DE ATENDIMENTO
-                </span>
-                <h3 className="font-serif text-2xl font-bold text-[#2b261e]">Entre em Contato</h3>
-                <div className="space-y-3 text-xs text-[#5e574c] pt-1">
-                  <p>
-                    <strong className="text-[#2b261e] block">Endereço:</strong>
-                    R. Domingos Vieira, 587 - Santa Efigênia, Belo Horizonte - MG, 30150-240
-                  </p>
-                  <p>
-                    <strong className="text-[#2b261e] block">Telefone / WhatsApp:</strong>
-                    (31) 97541-2091
-                  </p>
-                  <p>
-                    <strong className="text-[#2b261e] block">Instagram:</strong>
-                    <a
-                      href="https://www.instagram.com/advamandaferraz/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#80643d] hover:text-[#80643d] transition-colors inline-flex items-center gap-1.5 mt-0.5"
-                    >
-                      <InstagramIcon className="w-3.5 h-3.5 text-[#80643d]" />
-                      <span>@advamandaferraz</span>
-                    </a>
-                  </p>
-                  <p>
-                    <strong className="text-[#2b261e] block">Atendimento:</strong>
-                    Atendimento presencial em Belo Horizonte e online. Entre em contato para agendar.
-                  </p>
-                </div>
-                <div className="pt-4 border-t border-[#80643d]/20 flex justify-between items-center">
+                <div className="pt-4 border-t border-[#b89040]/20 flex justify-between items-center">
                   <a
-                    href={whatsappDirectUrl}
+                    href={getWhatsAppUrl("Olá, Dra. Beatriz! Gostaria de tirar dúvidas sobre as áreas de atuação.")}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2.5 bg-green-600 hover:bg-green-500 text-white text-xs font-semibold tracking-wider uppercase rounded-xl"
+                    className="px-4 py-2.5 bg-[#b89040] hover:bg-[#a47e33] text-[#121316] text-xs font-bold uppercase rounded-lg shadow-sm"
                   >
-                    Falar no WhatsApp
+                    Tirar Dúvidas no WhatsApp
                   </a>
                   <button
                     onClick={() => setActiveModal(null)}
-                    className="px-5 py-2.5 bg-[#fffdf8] border border-[#80643d]/20 text-[#2b261e] text-xs font-semibold tracking-wider uppercase rounded-xl hover:bg-[#e9e0d1] cursor-pointer"
+                    className="px-5 py-2.5 bg-[#ffffff] border border-[#b89040]/30 text-[#121316] text-xs font-semibold uppercase rounded-lg hover:bg-[#f4efe4] cursor-pointer"
                   >
                     Fechar
                   </button>

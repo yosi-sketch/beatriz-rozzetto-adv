@@ -7,38 +7,44 @@
 web
 
 ## Users
-Empresários, executivos de grandes corporações, investidores e pessoas físicas de alto patrimônio que enfrentam litígios complexos, disputas societárias ou necessitam de blindagem jurídica e consultoria preventiva estratégica.
+
+Pessoas físicas, famílias, trabalhadores, profissionais liberais e empresários de São João del-Rei, região do Campo das Vertentes e de todo o Brasil que necessitam de orientação e representação jurídica de alto padrão em causas cíveis, trabalhistas, contratuais e familiares.
 
 ## Product Purpose
-Página de conversão institucional e autoridade de alto padrão para o escritório Racine Ribeiro Advocacia & Consultoria. O objetivo principal é transmitir solidez técnica inabalável, prestígio e discrição absoluta, conduzindo o visitante qualificado ao agendamento de consultas estratégicas e reuniões reservadas na sede.
+
+Página de conversão institucional e autoridade de alto padrão para a Dra. Beatriz Rozzetto (Advocacia & Consultoria Jurídica). O objetivo principal é transmitir rigor técnico, acolhimento humano, transparência processual e resolutividade comprovada por avaliações 5.0 estrelas no Google Maps, conduzindo o visitante qualificado ao agendamento de consultas pelo WhatsApp ou presencialmente na sede.
 
 ## Positioning
-Boutique jurídica de elite com 19 anos de tradição sólida. Une rigor técnico impecável e visão executiva multidisciplinar à blindagem preventiva e contencioso de alta complexidade, atuando sob sigilo absoluto e atendimento exclusivo diretamente pelo corpo diretivo.
+
+Advocacia estratégica, artesanal e resolutiva em São João del-Rei - MG. Une aprofundamento doutrinário e rigor técnico a um atendimento humanizado, atencioso e sem intermediários, pautado pela ética, pontualidade e transparência nos honorários.
 
 ## Operating Context
-Avaliadores de risco corporativo, diretores jurídicos, conselheiros de empresas e clientes em situações críticas ou de tomada de decisão de alto valor financeiro e reputacional. O processo de contratação exige confiança imediata, comprovação de reputação ilibada e infraestrutura reservada.
+
+Pessoas enfrentando disputas contratuais, rescisões e abusos trabalhistas (como descontos indevidos em salário), questões delicadas de família (divórcios, guarda, pensão), cobranças indevidas ou danos morais e materiais. O cliente busca segurança imediata, escuta verdadeira e clareza sobre seus direitos.
 
 ## Capabilities and Constraints
-- Funcionalidades: Apresentação institucional imersiva, narrativa guiada por scroll, showcase 3D interativo da Deusa da Justiça (Lady Justice), vitrine do Corpo Diretivo com os perfis dos sócios, tour imersivo da sede executiva na Av. Paulista, modais de especialidades/histórico e canais diretos de contato e agendamento.
-- Restrições Técnicas: Next.js 16 (App Router) + Turbopack, Three.js com procedural textures bronze/pátina, Framer Motion para scroll-driven storytelling, Tailwind CSS v4 com `overflow-x: clip`, alta performance mobile e desktop sem quebras de layout.
+
+- Funcionalidades: Apresentação institucional de alto nível, vitrine editorial da advogada titular, seções temáticas de Direito Civil e Direito do Trabalho, carrossel/grid de 12 avaliações reais e verificadas do Google Maps com filtro por categorias, formulário direto conectado ao WhatsApp, modais informativos de áreas de atuação e canais de contato.
+- Regra de Ouro Visual: Rigorosamente no máximo uma imagem significativa por dobra, garantindo foco visual, narrativa editorial e alta fluidez de leitura.
+- Restrições Técnicas: Next.js 16 (App Router) + Turbopack, Framer Motion para animações refinadas, Tailwind CSS v4, responsividade impecável em todos os dispositivos.
 
 ## Brand Commitments
-- Nome: Racine Ribeiro Advocacia & Consultoria
-- Tempo de Atuação: 19 anos de história (fundado em 2007)
-- Cores Institucionais: Verde corporativo nobre (`#286641`, `#3ea668`), preto profundo e carvão mineral (`#0a0f0d`, `#080d0a`), toques metálicos de bronze envelhecido e iluminação indireta quente.
-- Tom de Voz: Institucional, sóbrio, austero, confiante e de alta precisão técnica.
-- Conformidade: OAB regulamentada, conformidade rigorosa com a LGPD e protocolos de sigilo de ponta a ponta.
+
+- Nome: Dra. Beatriz Rozzetto — Advocacia & Consultoria Jurídica
+- Localização: Av. Leite de Castro, 125 - Fábricas, São João del Rei - MG, CEP 36301-180
+- Avaliações: 5,0 de 5,0 estrelas no Google Maps (17 avaliações reais)
+- Cores Institucionais:
+  - Preto Ônix / Obsidian (`#121316`, `#181920`, `#0D0E11`) extraído do monograma BR
+  - Dourado Champanhe / Nobre (`#B89040`, `#C5A559`, `#D8B979`) extraído do traço refinado do logo
+  - Marfim / Alabastro Quente (`#FAF8F5`, `#F4F0E6`, `#FFFFFF`) para contraste editorial nobre e leitura suave
+- Tom de Voz: Seguro, elegante, empático, claro, acolhedor e de rigorosa precisão jurídica.
+- Conformidade: OAB/MG regulamentada, conformidade com a LGPD e sigilo profissional irrestrito.
 
 ## Evidence on Hand
-- Modelo 3D proprietário GLB da Themis / Lady Justice (`public/Model-3D/justice-3d.glb`)
-- Logotipo oficial do escritório (`public/logo.png`)
-- Fotografias em alta definição do corpo diretivo (`jean-racine.png`, `samuel-guimaraes.png`, `theresa-bethonico.png`)
-- Fotografia em alta definição da sede executiva na Av. Paulista (`escritorio-rr.webp`)
-- Fotografia em perspectiva em primeira pessoa da cliente institucional (`cliente-de-pe2.png`)
-- Fotografia da biblioteca jurídica para o background do Hero (`biblioteca-background.webp`)
 
-## Product Principles
-1. **Autoridade Antes da Oferta:** O cliente corporativo e de alto patrimônio busca segurança e calibre técnico comprovado; o design e o tom devem refletir peso institucional desde o primeiro segundo.
-2. **Discrição e Sigilo Absolutos:** Cada elemento visual e textual deve respirar confidencialidade, acolhimento reservado e solidez.
-3. **Clareza Decisória:** Navegação limpa e direta, sem ruídos visuais ou barreiras artificiais, priorizando tipografia editorial e impacto estético de alto nível.
-4. **Excelência Omnichannel:** Experiência fluida e imersiva com Three.js e Framer Motion perfeitamente calibrados tanto no desktop quanto no mobile.
+- Logotipo oficial com monograma BR e traço dourado (`public/logo.png`, `public/logo-nobackground.png`)
+- Retrato oficial da Dra. Beatriz Rozzetto segurando a estátua de Têmis / Deusa da Justiça (`public/dra-beatriz-themis.webp`)
+- Retrato da Dra. Beatriz Rozzetto com o livro de Direito Civil de César Fiuza (`public/dra-beatriz-direito-civil.jpg`)
+- Retrato acolhedor da Dra. Beatriz Rozzetto sorridente com livro aberto (`public/dra-beatriz-livro-sorrindo.jpg`)
+- Publicação educativa sobre proteção salarial contra descontos automáticos (`public/dra-beatriz-post-trabalhista.jpg`)
+- Favicons e ícones gerados em alta fidelidade (`app/icon.png`, `app/apple-icon.png`, `public/favicon.ico`)

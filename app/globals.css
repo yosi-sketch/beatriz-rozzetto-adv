@@ -2,14 +2,16 @@
 
 @layer base {
   :root {
-    --brand-primary: #6f5934;
-    --brand-primary-light: #aa8d5c;
-    --brand-primary-dark: #40331f;
-    --brand-accent: #c2ab7b;
-    --brand-accent-glow: rgba(170, 141, 92, 0.12);
-    --bg-dark: #f7f4ed;
-    --card-surface: #fffdf8;
-    --card-surface-light: #f1eadc;
+    --brand-primary: #b89040;
+    --brand-primary-light: #c5a559;
+    --brand-primary-dark: #7e5e22;
+    --brand-accent: #d8b979;
+    --brand-accent-glow: rgba(184, 144, 64, 0.16);
+    --bg-light: #faf8f5;
+    --bg-dark: #0f1013;
+    --card-surface: #ffffff;
+    --card-surface-light: #f5f1e8;
+    --noir: #121316;
   }
 }
 
@@ -17,17 +19,23 @@
   --font-serif: var(--font-serif), "Cormorant Garamond", Georgia, serif;
   --font-sans: var(--font-sans), "Plus Jakarta Sans", system-ui, sans-serif;
   
-  --color-brand-50: #fff9e9;
-  --color-brand-100: #f9edc9;
-  --color-brand-200: #e2d3b0;
-  --color-brand-300: #cbb78b;
-  --color-brand-400: #aa8d5c;
-  --color-brand-500: #8a7046;
-  --color-brand-600: #6f5934;
-  --color-brand-700: #59472b;
-  --color-brand-800: #40331f;
-  --color-brand-900: #2d2417;
-  --color-brand-950: #1d1710;
+  --color-brand-50: #faf6ed;
+  --color-brand-100: #f4ecda;
+  --color-brand-200: #e6d6b0;
+  --color-brand-300: #d5be82;
+  --color-brand-400: #c5a559;
+  --color-brand-500: #b89040;
+  --color-brand-600: #9e782f;
+  --color-brand-700: #7e5e22;
+  --color-brand-800: #5c4417;
+  --color-brand-900: #3d2d0e;
+  --color-brand-950: #211806;
+
+  --color-noir-950: #0a0b0d;
+  --color-noir-900: #0f1013;
+  --color-noir-850: #141519;
+  --color-noir-800: #1a1b21;
+  --color-noir-700: #24252d;
 }
 
 .font-serif {
@@ -39,8 +47,8 @@
 }
 
 body {
-  background-color: #f7f4ed;
-  color: #2b261e;
+  background-color: #faf8f5;
+  color: #1a1b20;
   font-family: var(--font-sans), "Plus Jakarta Sans", system-ui, sans-serif;
 }
 
@@ -49,35 +57,35 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #eee9df;
+  background: #f0ebe1;
 }
 ::-webkit-scrollbar-thumb {
-  background: #b9ab93;
+  background: #c7bba8;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #8a7046;
+  background: #b89040;
 }
 
-/* Subtle luxury shadow utilities - sóbrios e sem excesso de brilho */
-.glow-amber-sm {
-  box-shadow: 0 0 8px rgba(170, 141, 92, 0.08);
+/* Subtle luxury shadows & glows */
+.glow-gold-sm {
+  box-shadow: 0 0 10px rgba(184, 144, 64, 0.12);
 }
-.glow-amber-md {
-  box-shadow: 0 0 12px rgba(170, 141, 92, 0.1);
+.glow-gold-md {
+  box-shadow: 0 0 18px rgba(184, 144, 64, 0.18);
 }
-.glow-amber-lg {
-  box-shadow: 0 0 18px rgba(170, 141, 92, 0.12);
-}
-
-.text-glow {
-  text-shadow: none;
+.glow-gold-lg {
+  box-shadow: 0 0 28px rgba(184, 144, 64, 0.22);
 }
 
 /* Abstract subtle grid pattern */
 .bg-grid-subtle {
-  background-size: 48px 48px;
+  background-size: 52px 52px;
   background-image: 
-    linear-gradient(to right, rgba(75, 60, 38, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(75, 60, 38, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, rgba(184, 144, 64, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(184, 144, 64, 0.05) 1px, transparent 1px);
+}
+
+.bg-radial-luxury {
+  background: radial-gradient(circle at 50% 0%, rgba(184, 144, 64, 0.08) 0%, transparent 70%);
 }
